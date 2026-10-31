@@ -14,9 +14,9 @@ export default function LeagueTable({ rows, compact = false, lang = "ka" }: { ro
             <th className="num">{h.p}</th>
             {!compact && (
               <>
-                <th className="num">{h.w}</th>
-                <th className="num">{h.d}</th>
-                <th className="num">{h.l}</th>
+                <th className="num wdl">{h.w}</th>
+                <th className="num wdl">{h.d}</th>
+                <th className="num wdl">{h.l}</th>
               </>
             )}
             <th className="num">{h.g}</th>
@@ -34,9 +34,9 @@ export default function LeagueTable({ rows, compact = false, lang = "ka" }: { ro
               <td className="num">{r.played}</td>
               {!compact && (
                 <>
-                  <td className="num">{r.won}</td>
-                  <td className="num">{r.drawn}</td>
-                  <td className="num">{r.lost}</td>
+                  <td className="num wdl">{r.won}</td>
+                  <td className="num wdl">{r.drawn}</td>
+                  <td className="num wdl">{r.lost}</td>
                 </>
               )}
               <td className="num">
