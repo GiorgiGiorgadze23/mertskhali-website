@@ -1,7 +1,24 @@
 // Archive team photos (from the club history book), restored and stored in /public/history.
-export type HistoryPhoto = { src: string; year: number; w: number; h: number; title: { ka: string; en: string }; names?: string };
+export type HistoryPhoto = { src: string; year: number; w: number; h: number; title: { ka: string; en: string }; details?: { ka: string; en: string }; names?: string; featured?: boolean };
 
 export const HISTORY_PHOTOS: HistoryPhoto[] = [
+  {
+    src: "/history/history-1982.jpg",
+    year: 1982,
+    w: 1500,
+    h: 1012,
+    featured: true,
+    title: {
+      ka: "საქართველოს თასის ფინალი: მახარაძის „მერცხალი“ – „ზოვეტი“ (თბილისი) 4:1",
+      en: "Georgian Cup final: Mertskhali Makharadze 4–1 Zovet Tbilisi",
+    },
+    details: {
+      ka: "1982 წლის 4 სექტემბერი, თბილისი, „დინამოს“ ცენტრალური სტადიონი. ამ წელს „მერცხალმა“ მოიგო ყველაფერი, რაც მოსაგები იყო. გოლები: კვაჭანტირაძე (2), თოფურიძე, ხამაშურიძე; ფრუიძე („ზოვეტი“). მსაჯი: ა. მილჩენკო.",
+      en: "4 September 1982, Dinamo Central Stadium, Tbilisi. That year Mertskhali won everything there was to win. Goals: Kvachantiradze (2), Topuridze, Khamashuridze; Pruidze (Zovet). Referee: A. Milchenko.",
+    },
+    names:
+      "მარჯვნიდან, დგანან: ბახვა გიორგაძე (გუნდის უფროსი), თემურაზ გრძელიშვილი (უფროსი მწვრთნელი), ბესიკ უგულავა, ტატო წიკლაური, მერაბ ღლონტი, სერგეი დუდა, ვასილი მაზინჩუკი, ბესარიონ არჩვაძე, ვალიკო დუმბაძე, შუქრი კაშია, სოსო გაგუა (მწვრთნელი). წინა რიგში, მარცხნიდან: გელა ჩიგოგიძე, გიზო გუჯაბიძე, გიორგი გალინი (გუნდის ექიმი), ვლადიმერ კვაჭანტირაძე, გოჩა როყვა, ივანე თოფურიძე, ზურაბ ხამაშურიძე, გოჩა არაბიძე. ამ პერიოდში გუნდში იყო ბადრი ლომინაძეც, რომელიც, სამწუხაროდ, ფოტოზე არ არის. ვრცლად ამ გამარჯვების შესახებ — წიგნში „მერცხალი ისევ მოიყვანს გაზაფხულს“.",
+  },
   {
     src: "/history/history-1987.jpg",
     year: 1987,

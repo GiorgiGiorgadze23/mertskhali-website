@@ -150,13 +150,14 @@ export async function GalleryPage({ lang }: { lang: Lang }) {
         <p className="muted" style={{ marginTop: 6 }}>{d.archiveSub}</p>
         <div className="archive">
           {HISTORY_PHOTOS.map((p) => (
-            <figure key={p.src} className="archive-item">
+            <figure key={p.src} className={`archive-item${p.featured ? " featured" : ""}`}>
               <a href={p.src} target="_blank" rel="noopener" aria-label={`${p.year} — ${p.title[lang]}`}>
                 <img src={p.src} alt={`${p.year}. ${p.title[lang]}`} width={p.w} height={p.h} loading="lazy" />
                 <span className="year">{p.year}</span>
               </a>
               <figcaption>
                 <b>{p.title[lang]}</b>
+                {p.details && <span className="details">{p.details[lang]}</span>}
                 {p.names && lang === "ka" && <span className="names">{p.names}</span>}
               </figcaption>
             </figure>

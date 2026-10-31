@@ -262,6 +262,12 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 .archive-item .year { position: absolute; left: 12px; top: 12px; background: var(--ink); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 15px; padding: 4px 10px; border-radius: 6px; }
 .archive-item figcaption { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
 .archive-item figcaption b { font-size: 16px; color: var(--ink); }
+.archive-item.featured { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+.archive-item.featured a { display: flex; align-items: center; }
+.archive-item.featured figcaption { padding: 24px 26px; gap: 10px; justify-content: center; }
+.archive-item.featured figcaption b { font-family: var(--serif); font-size: 21px; line-height: 1.35; }
+.archive-item .details { font-size: 15px; line-height: 1.6; color: var(--text-2); }
+@media (max-width: 860px) { .archive-item.featured { display: block; } .archive-item.featured figcaption { padding: 16px; } .archive-item.featured figcaption b { font-size: 18px; } }
 .archive-item .names { font-size: 13px; line-height: 1.55; color: var(--muted); }
 /* gallery */
 .gallery { columns: 3 280px; column-gap: 16px; }
