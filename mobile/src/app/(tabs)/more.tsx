@@ -6,8 +6,7 @@ import { API } from "@/lib/api";
 import { C, R } from "@/lib/theme";
 import { Card, H2, Screen } from "@/components/ui";
 
-const PHONE = "555 21 70 70";
-const EMAIL = "tolordavagiorgi@gmail.com";
+const EMAIL = "giorgadze@gmail.com";
 const FACEBOOK = "https://www.facebook.com/profile.php?id=61584229075980";
 
 function Row({ icon, label, value, onPress }: { icon: React.ComponentProps<typeof Ionicons>["name"]; label: string; value: string; onPress: () => void }) {
@@ -62,7 +61,6 @@ export default function MoreScreen() {
       <H2>{d.contactTitle}</H2>
       <Card style={{ paddingVertical: 6 }}>
         <Row icon="location" label={d.addressLabel} value={d.address} onPress={() => Linking.openURL("https://www.openstreetmap.org/search?query=Ozurgeti%20stadium")} />
-        <Row icon="call" label={d.phoneLabel} value={PHONE} onPress={() => Linking.openURL(`tel:+995${PHONE.replace(/\s/g, "")}`)} />
         <Row icon="mail" label={d.emailLabel} value={EMAIL} onPress={() => Linking.openURL(`mailto:${EMAIL}`)} />
         <Row icon="logo-facebook" label={d.socialLabel} value={`Facebook — ${d.clubFull}`} onPress={() => Linking.openURL(FACEBOOK)} />
         <Row icon="images" label={d.galleryTitle} value={lang === "ka" ? "ფოტოები საიტზე" : "Photos on the website"} onPress={() => WebBrowser.openBrowserAsync(API + (lang === "en" ? "/en/gallery" : "/gallery"))} />

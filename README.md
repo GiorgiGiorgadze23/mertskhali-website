@@ -54,7 +54,7 @@ League table, fixtures and results sync from liga.gff.ge every morning automatic
 - **Squad:** `/admin/squad` — fix names/numbers, add photos, add or remove players.
 - **Gallery:** `/admin/gallery` — upload several photos at once.
 - **Messages:** contact-form messages arrive in `/admin/messages`.
-- **Club details** (phone, email, coach, Facebook): edit `lib/club.ts` on GitHub → Vercel redeploys automatically.
+- **Club details** (email, coach, Facebook): edit `lib/club.ts` on GitHub → Vercel redeploys automatically.
 - **Logo:** `public/logo.png` (header) and `app/icon.png` (browser tab) — replace the files to change the crest.
 - **New season:** change `GFF_SEASON` / `GFF_LEAGUE` in Vercel env vars (numbers from the liga.gff.ge URL, e.g. `?season=44&league=4`).
 

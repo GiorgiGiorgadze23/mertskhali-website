@@ -199,7 +199,6 @@ export function ContactPage({ lang }: { lang: Lang }) {
         <div className="main" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           <h1 className="h1">{d.contactTitle}</h1>
           <div><div className="muted" style={label}>{d.addressLabel}</div><div style={{ fontSize: 17 }}>{d.address}</div></div>
-          <div><div className="muted" style={label}>{d.phoneLabel}</div><a href={`tel:+995${CONTACT.phone.replace(/\s/g, "")}`} style={{ fontSize: 17 }}>{CONTACT.phone}</a></div>
           <div><div className="muted" style={label}>{d.emailLabel}</div><a href={`mailto:${CONTACT.email}`} style={{ fontSize: 17 }}>{CONTACT.email}</a></div>
           <div><div className="muted" style={label}>{d.socialLabel}</div><a href={CONTACT.facebook} target="_blank" rel="noopener" style={{ fontSize: 17, fontWeight: 700 }}>Facebook — {d.clubFull}</a></div>
           <iframe

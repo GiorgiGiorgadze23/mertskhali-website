@@ -11,7 +11,7 @@ export default function SiteFooter({ lang }: { lang: Lang }) {
           <strong>{d.clubFull}</strong>
           <div>{d.address}</div>
           <div>
-            {CONTACT.phone} · {CONTACT.email}
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
           </div>
         </div>
         <nav aria-label={d.footerMenu}>

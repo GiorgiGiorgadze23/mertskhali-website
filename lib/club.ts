@@ -1,8 +1,7 @@
 // Club details shown across the site. Edit here and redeploy.
 export const CONTACT = {
   address: "კოტე გოგატაძის სტადიონი, ოზურგეთი",
-  phone: "555 21 70 70",
-  email: "tolordavagiorgi@gmail.com",
+  email: "giorgadze@gmail.com",
   facebook: "https://www.facebook.com/profile.php?id=61584229075980",
 };
 
