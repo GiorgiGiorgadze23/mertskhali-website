@@ -20,7 +20,7 @@ export default function SiteHeader() {
     <header className="site-header">
       <div className="inner">
         <Link href="/" className="brand">
-          <img src="/logo.svg" alt="" width={44} height={44} />
+          <img src="/logo.png" alt="ს.კ მერცხალი 1925" width={52} height={52} />
           <span>
             <span className="brand-name">მერცხალი</span>
             <span className="brand-sub">ოზურგეთი · 1925</span>

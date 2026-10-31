@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "ს.კ მერცხალი 1925 — ოზურგეთი", template: "%s · მერცხალი" },
   description: "ოზურგეთის მერცხლის ოფიციალური საიტი: სიახლეები, შემადგენლობა, მატჩები და ტურნირის ცხრილი.",
-  icons: { icon: "/logo.svg" },
+  openGraph: { images: ["/logo-512.png"] },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
