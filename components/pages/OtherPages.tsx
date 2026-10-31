@@ -149,7 +149,7 @@ export async function GalleryPage({ lang }: { lang: Lang }) {
         <h2 className="archive-title">{d.archiveTitle}</h2>
         <p className="muted" style={{ marginTop: 6 }}>{d.archiveSub}</p>
         <aside className="archive-source">
-          <img src="/history/book-cover.jpg" alt={d.sourceBookTitle} width={110} height={160} loading="lazy" />
+          <img src="/history/book-cover.jpg" alt={d.sourceBookTitle} width={433} height={639} loading="lazy" />
           <div>
             <span className="label">{d.sourceLabel}</span>
             <b>{d.sourceBookTitle}</b>
