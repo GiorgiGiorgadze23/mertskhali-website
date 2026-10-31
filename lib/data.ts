@@ -20,6 +20,15 @@ export async function getMatches(): Promise<Match[]> {
   return !error && data?.length ? (data as Match[]) : seedMatches;
 }
 
+export async function getMatch(id: string): Promise<Match | null> {
+  const db = publicClient();
+  if (db) {
+    const { data } = await db.from("matches").select("*").eq("id", id).maybeSingle();
+    if (data) return data as Match;
+  }
+  return seedMatches.find((m) => m.id === id) ?? null;
+}
+
 export async function getPlayers(): Promise<Player[]> {
   const db = publicClient();
   if (!db) return seedPlayers;

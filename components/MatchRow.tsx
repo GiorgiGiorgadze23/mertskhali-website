@@ -1,12 +1,13 @@
+import Link from "next/link";
 import type { Match } from "@/lib/types";
 import { isUs, outcome } from "@/lib/data";
-import { dateLabel, roundName, t, teamName, type Lang } from "@/lib/i18n";
+import { dateLabel, L, roundName, t, teamName, type Lang } from "@/lib/i18n";
 
 export default function MatchRow({ m, lang = "ka" }: { m: Match; lang?: Lang }) {
   const d = t(lang);
   const o = outcome(m);
   return (
-    <div className="card match">
+    <Link href={L(lang, `/matches/${m.id}`)} className="card match match-link" aria-label={`${teamName(lang, m.home)} – ${teamName(lang, m.away)}`}>
       <div className="when">
         <b>{dateLabel(lang, m.date_label)}</b>
         <span className="muted" style={{ fontSize: 13 }}>
@@ -19,6 +20,7 @@ export default function MatchRow({ m, lang = "ka" }: { m: Match; lang?: Lang }) 
         <span>{teamName(lang, m.away)}</span>
       </div>
       {o ? <span className={`tag ${o}`}>{d.outcome[o]}</span> : <span className="tag">{isUs(m.home) ? d.home : d.away}</span>}
-    </div>
+      <span className="match-chev" aria-hidden="true">›</span>
+    </Link>
   );
 }

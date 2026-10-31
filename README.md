@@ -88,3 +88,8 @@ Checks daily via Vercel, every 30 min if you run `supabase/005_facebook_schedule
 7. `/admin` → **Facebook-დან განახლება**. The first run imports the latest 25 posts without sending notifications.
 
 If the admin who created the token loses Page access or changes their Facebook password, repeat steps 3–6.
+
+## Match details
+Each match has its own page (`/matches/<id>`): goals with minutes, substitutions, cards, both lineups, coaches and referees,
+read from the official GFF match page during the daily sync (or **ახლავე განახლება** in `/admin/matches`).
+Run `supabase/006_match_details.sql` once to enable it. Sofascore is linked, not copied (their terms don't allow reuse of their data).

@@ -82,6 +82,7 @@ export const dict = {
     writeUs: "მოგვწერეთ",
     form: { name: "სახელი", email: "ელფოსტა", message: "შეტყობინება", send: "გაგზავნა", sending: "იგზავნება…", thanks: "გმადლობთ! შეტყობინება გაიგზავნა.", fill: "შეავსეთ ყველა ველი.", notReady: "ფორმა ჯერ არ არის დაკავშირებული.", failed: "ვერ გაიგზავნა, სცადეთ მოგვიანებით." },
     newsFallback: "სიახლე",
+    md: { back: "← ყველა მატჩი", events: "მატჩის მიმდინარეობა", lineups: "შემადგენლობა", starters: "ძირითადი", subs: "სათადარიგო", coach: "მთავარი მწვრთნელი", referees: "მსაჯები", noDetails: "მატჩის დეტალები ჯერ არ არის — ჩნდება GFF-ის მონაცემების განახლებისას.", upcoming: "მატჩი ჯერ არ ჩატარებულა.", kickoff: "დაწყება", venue: "სტადიონი", source: "წყარო", sofascore: "Sofascore-ზე ნახვა", details: "დეტალები →", goal: "გოლი", ownGoal: "ავტოგოლი", penalty: "პენალტი", yellow: "ყვითელი ბარათი", red: "წითელი ბარათი", sub: "შეცვლა", captain: "კაპიტანი" },
   },
   en: {
     clubFull: "FC Mertskhali 1925",
@@ -161,6 +162,7 @@ export const dict = {
     writeUs: "Write to us",
     form: { name: "Name", email: "Email", message: "Message", send: "Send", sending: "Sending…", thanks: "Thank you! Your message has been sent.", fill: "Please fill in all fields.", notReady: "The form is not connected yet.", failed: "Could not send, please try again later." },
     newsFallback: "News",
+    md: { back: "← All matches", events: "Match events", lineups: "Lineups", starters: "Starting XI", subs: "Substitutes", coach: "Head coach", referees: "Referees", noDetails: "No match details yet — they appear when GFF data is updated.", upcoming: "This match hasn't been played yet.", kickoff: "Kick-off", venue: "Venue", source: "Source", sofascore: "View on Sofascore", details: "Details →", goal: "Goal", ownGoal: "Own goal", penalty: "Penalty", yellow: "Yellow card", red: "Red card", sub: "Substitution", captain: "Captain" },
   },
 } as const;
 

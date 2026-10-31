@@ -1,5 +1,6 @@
 import { parse, type HTMLElement } from "node-html-parser";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Lineup, MatchDetails, MatchEvent } from "./types";
 
 // Reads the public league pages on liga.gff.ge and stores the table and every match of the league.
 // The markup (class names like c-pos, rb-item, cb-item) was checked on 31 Oct 2026; if GFF
@@ -71,6 +72,7 @@ export function parseMatches(doc: HTMLElement, prefix: "rb" | "cb") {
         venue: el.querySelector(`.${prefix}-misc-item`)?.getAttribute("title")?.trim() || null,
         played,
         sort: n,
+        gff_path: href.startsWith("/game/") ? href : null,
         updated_at: new Date().toISOString(),
       });
     }
@@ -98,8 +100,100 @@ export async function syncGff(db: SupabaseClient) {
   if (matches.length) {
     // Remove the hand-entered seed rows (ids r1…r30) once real GFF ids arrive.
     await db.from("matches").delete().like("id", "r%");
-    const up = await db.from("matches").upsert(matches, { onConflict: "id" });
+    let up = await db.from("matches").upsert(matches, { onConflict: "id" });
+    if (up.error?.message.includes("gff_path")) {
+      // 006_match_details.sql not run yet: save without the match-page link.
+      up = await db.from("matches").upsert(matches.map(({ gff_path, ...m }) => m), { onConflict: "id" });
+    }
     if (up.error) throw new Error(up.error.message);
   }
-  return { standings: standings.length, matches: matches.length };
+  const details = await syncDetails(db).catch(() => 0);
+  return { standings: standings.length, matches: matches.length, details };
+}
+
+// ---------- single match page (/game/…) ----------
+const isUs = (t: string) => t.startsWith("მერცხალი");
+const titleCase = (s: string) => s.replace(/(^|[\s\-/])(\p{Ll})/gu, (_, a, b) => a + b.toUpperCase());
+
+function parseLineup(el: HTMLElement | null): Lineup {
+  const empty: Lineup = { starters: [], subs: [], coach: null };
+  if (!el) return empty;
+  const paras = el.querySelectorAll("p");
+  let mode: "starters" | "subs" = "starters";
+  for (const p of paras) {
+    const head = txt(p.querySelector("strong"));
+    if (/სათადარიგო/.test(head)) {
+      mode = "subs";
+      continue;
+    }
+    if (/მწვრთნელი/.test(head)) {
+      empty.coach = p.text.replace(head, "").trim() || null;
+      continue;
+    }
+    const lines = p.innerHTML.split(/<br\s*\/?>/i).map((h) => parse(h)).filter((n) => txt(n));
+    for (const n of lines) {
+      const line = txt(n);
+      const m = line.match(/^(\d+)\.\s*(.+?)(\s+C)?$/);
+      const captain = !!n.querySelector(".badge-c");
+      const name = (m ? m[2] : line).replace(/\s+C$/, "").trim();
+      empty[mode].push({ num: m ? m[1] : "", name, captain });
+    }
+  }
+  return empty;
+}
+
+export function parseGame(doc: HTMLElement): MatchDetails {
+  let events: MatchEvent[] = [];
+  const raw = doc.querySelector("[data-events]")?.getAttribute("data-events");
+  if (raw) {
+    try {
+      const list = JSON.parse(raw.replace(/&quot;/g, '"').replace(/&amp;/g, "&")) as { minute: number | string; minute_addit: number | string; side: string; type: string; text_en?: string; text_ka?: string }[];
+      events = list.map((e) => ({
+        minute: Number(e.minute) || 0,
+        extra: Number(e.minute_addit) || null,
+        side: e.side === "club_2" ? "away" : "home",
+        type: String(e.type || ""),
+        ka: String(e.text_ka || "").trim(),
+        en: titleCase(String(e.text_en || "").trim()),
+      }));
+    } catch {}
+  }
+  const referees: { role: string; name: string }[] = [];
+  for (const li of doc.querySelectorAll(".ar-body li")) {
+    const role = txt(li.querySelector("strong"));
+    if (!role) continue;
+    const name = txt(li).replace(role, "").replace(/^[\s\u00a0-]+/, "").trim();
+    if (name) referees.push({ role, name });
+  }
+  return {
+    events,
+    home: parseLineup(doc.querySelector(".gf-line-up-1 .gf-line-ups-text")),
+    away: parseLineup(doc.querySelector(".gf-line-up-2 .gf-line-ups-text")),
+    referees,
+    kickoffAt: doc.querySelector("time.gf-game-date")?.getAttribute("datetime") ?? null,
+  };
+}
+
+/** Fetches match pages for our club's games that have no details yet (and re-checks games of the last 3 days). */
+export async function syncDetails(db: SupabaseClient) {
+  const { data, error } = await db.from("matches").select("id, home, away, played, gff_path, details_at, updated_at").not("gff_path", "is", null);
+  if (error || !data) return 0;
+  const recent = Date.now() - 3 * 864e5;
+  const todo = data
+    .filter((m) => (isUs(m.home) || isUs(m.away)) && m.played && (!m.details_at || new Date(m.details_at).getTime() > recent))
+    .slice(0, 40);
+  let done = 0;
+  for (let i = 0; i < todo.length; i += 5) {
+    await Promise.all(
+      todo.slice(i, i + 5).map(async (m) => {
+        try {
+          const details = parseGame(await get(m.gff_path!));
+          if (!details.events.length && !details.home.starters.length) return;
+          const r = await db.from("matches").update({ details, details_at: new Date().toISOString() }).eq("id", m.id);
+          if (!r.error) done++;
+        } catch {}
+      }),
+    );
+  }
+  return done;
 }

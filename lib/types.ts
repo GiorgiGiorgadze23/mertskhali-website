@@ -53,7 +53,14 @@ export type Match = {
   venue: string | null;
   played: boolean;
   sort: number;
+  gff_path?: string | null;
+  details?: MatchDetails | null;
 };
+
+export type MatchEvent = { minute: number; extra: number | null; side: "home" | "away"; type: string; ka: string; en: string };
+export type LineupPlayer = { num: string; name: string; captain: boolean };
+export type Lineup = { starters: LineupPlayer[]; subs: LineupPlayer[]; coach: string | null };
+export type MatchDetails = { events: MatchEvent[]; home: Lineup; away: Lineup; referees: { role: string; name: string }[]; kickoffAt: string | null };
 
 export type GalleryItem = {
   id: string;
