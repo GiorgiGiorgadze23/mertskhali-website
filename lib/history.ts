@@ -17,6 +17,15 @@ export const HISTORY_PHOTOS: HistoryPhoto[] = [
     names: "მარცხნიდან პირველი: გივი დუმბაძე, დიმიტრი დუმბაძე. დანარჩენი უცნობია.",
   },
   {
+    src: "/history/history-1975.jpg",
+    year: 1975,
+    w: 1440,
+    h: 1080,
+    featured: true,
+    title: { ka: "მერაბ ვანიძე და სოსო გაგუა თავის გუნდთან ერთად", en: "Merab Vanidze and Soso Gagua with their team" },
+    details: { ka: "ოზურგეთის ცენტრალური სტადიონი, 1975 წელი.", en: "Ozurgeti Central Stadium, 1975." },
+  },
+  {
     src: "/history/history-1982.jpg",
     year: 1982,
     w: 1500,
