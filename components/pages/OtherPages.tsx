@@ -200,7 +200,6 @@ export function ContactPage({ lang }: { lang: Lang }) {
           <h1 className="h1">{d.contactTitle}</h1>
           <div><div className="muted" style={label}>{d.addressLabel}</div><div style={{ fontSize: 17 }}>{d.address}</div></div>
           <div><div className="muted" style={label}>{d.emailLabel}</div><a href={`mailto:${CONTACT.email}`} style={{ fontSize: 17 }}>{CONTACT.email}</a></div>
-          <div><div className="muted" style={label}>{d.socialLabel}</div><a href={CONTACT.facebook} target="_blank" rel="noopener" style={{ fontSize: 17, fontWeight: 700 }}>Facebook — {d.clubFull}</a></div>
           <iframe
             title={d.mapTitle}
             src="https://www.openstreetmap.org/export/embed.html?bbox=41.98%2C41.91%2C42.02%2C41.93&layer=mapnik"
