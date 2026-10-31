@@ -11,10 +11,10 @@ export const HISTORY_PHOTOS: HistoryPhoto[] = [
     featured: true,
     title: { ka: "შემოქმედის ფეხბურთელთა გუნდი", en: "Shemokmedi football team" },
     details: {
-      ka: "ოზურგეთის ფეხბურთის ისტორიიდან. სავარაუდოდ 1950–1954 წლები. 1954 წელს გუნდი მონაწილეობდა საქართველოს პირველობის რეგიონულ გათამაშებაში. მწვრთნელი — ტოგო დუმბაძე.",
+      ka: "ოზურგეთის ფეხბურთის ისტორიიდან. სავარაუდოდ 1950–1954 წლები. 1954 წელს გუნდი მონაწილეობდა საქართველოს პირველობის რეგიონულ გათამაშებაში. მწვრთნელი: ტოგო დუმბაძე.",
       en: "From the history of football in Ozurgeti. Probably 1950–1954. In 1954 the team played in the regional stage of the Georgian championship. Coach: Togo Dumbadze.",
     },
-    names: "მარცხნიდან პირველი — გივი დუმბაძე, მეორე — დიმიტრი დუმბაძე. დანარჩენებს თუ იცნობთ, მოგვწერეთ.",
+    names: "მარცხნიდან პირველი: გივი დუმბაძე, დიმიტრი დუმბაძე. დანარჩენი უცნობია.",
   },
   {
     src: "/history/history-1982.jpg",
