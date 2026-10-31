@@ -78,7 +78,7 @@ export async function MatchesPage({ lang, searchParams }: { lang: Lang; searchPa
             {list.length ? list.map((m) => <MatchRow key={m.id} m={m} lang={lang} />) : <p className="muted">{d.noMatches}</p>}
           </div>
         </div>
-        <aside className="card side" style={{ padding: 24, display: "flex", flexDirection: "column", gap: 14 }}>
+        <aside className="card side table-side" style={{ padding: 20, display: "flex", flexDirection: "column", gap: 14 }}>
           <h2 style={{ fontSize: 22 }}>
             {d.league} — {d.leagueTable}
           </h2>
