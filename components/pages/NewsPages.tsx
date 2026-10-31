@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import NewsCard, { newsExcerpt, newsTitle } from "@/components/NewsCard";
+import FacebookFeed from "@/components/FacebookFeed";
 import { getNews, getNewsBySlug } from "@/lib/data";
 import { CATEGORIES } from "@/lib/types";
 import { categoryName, formatDate, L, t, type Lang } from "@/lib/i18n";
@@ -33,15 +34,23 @@ export async function NewsListPage({ lang, searchParams }: { lang: Lang; searchP
           </Link>
         ))}
       </nav>
-      {items.length ? (
-        <div className="grid-cards">
-          {items.map((n) => (
-            <NewsCard key={n.id} n={n} lang={lang} />
-          ))}
+      <div className="news-with-fb">
+        <div className="news-col">
+          {items.length ? (
+            <div className="grid-cards">
+              {items.map((n) => (
+                <NewsCard key={n.id} n={n} lang={lang} />
+              ))}
+            </div>
+          ) : (
+            <p className="muted">{d.noNewsInCat}</p>
+          )}
         </div>
-      ) : (
-        <p className="muted">{d.noNewsInCat}</p>
-      )}
+        <aside className="fb-col" aria-label="Facebook">
+          <h2 style={{ fontSize: 20, marginBottom: 12 }}>Facebook</h2>
+          <FacebookFeed lang={lang} />
+        </aside>
+      </div>
       {pages > 1 && (
         <nav aria-label={d.pages} style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 40 }}>
           {Array.from({ length: pages }, (_, i) => i + 1).map((p) => (

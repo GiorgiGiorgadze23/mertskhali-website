@@ -1,6 +1,7 @@
 import Link from "next/link";
 import NewsCard from "@/components/NewsCard";
 import LeagueTable from "@/components/LeagueTable";
+import FacebookFeed from "@/components/FacebookFeed";
 import { getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
 
@@ -54,15 +55,22 @@ export default async function HomePage({ lang }: { lang: Lang }) {
           <h2 className="h2">{d.latestNews}</h2>
           <Link href={L(lang, "/news")} className="link-strong">{d.allNews} →</Link>
         </div>
-        {news.length ? (
-          <div className="grid-cards">
-            {news.map((n) => (
-              <NewsCard key={n.id} n={n} lang={lang} />
-            ))}
+        <div className="news-with-fb">
+          <div className="news-col">
+            {news.length ? (
+              <div className="grid-cards">
+                {news.map((n) => (
+                  <NewsCard key={n.id} n={n} lang={lang} />
+                ))}
+              </div>
+            ) : (
+              <p className="muted">{lang === "ka" ? "უახლესი პოსტები კლუბის Facebook გვერდიდან:" : "Latest posts from the club's Facebook page:"}</p>
+            )}
           </div>
-        ) : (
-          <p className="muted">{d.newsSoon}</p>
-        )}
+          <aside className="fb-col" aria-label="Facebook">
+            <FacebookFeed lang={lang} height={news.length ? 640 : 760} />
+          </aside>
+        </div>
       </section>
 
       <section className="container section">
