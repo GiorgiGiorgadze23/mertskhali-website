@@ -24,7 +24,9 @@ export default async function HomePage({ lang }: { lang: Lang }) {
             <span className="eyebrow">
               {d.league} · {d.season}
             </span>
-            <h1>{d.heroTitle}</h1>
+            <h1 className="hero-title">
+              <span className="accent">{d.heroTitle.split(" ")[0]}</span> {d.heroTitle.split(" ").slice(1).join(" ")}
+            </h1>
             <p>{d.heroText}</p>
             <div className="hero-actions">
               <Link href={L(lang, "/matches")} className="btn btn-primary">{d.fixtures}</Link>

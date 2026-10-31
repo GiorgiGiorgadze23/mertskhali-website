@@ -7,7 +7,7 @@ export const dict = {
   ka: {
     clubFull: "სკ მერცხალი 1925",
     clubShort: "მერცხალი",
-    clubSub: "ოზურგეთი · 1925",
+    clubSub: "ოზურგეთი · გურია",
     metaTitle: "სკ მერცხალი 1925 — ოზურგეთი",
     metaDesc: "ოზურგეთის მერცხლის ოფიციალური საიტი: სიახლეები, შემადგენლობა, მატჩები და ტურნირის ცხრილი.",
     nav: { home: "მთავარი", news: "სიახლეები", squad: "შემადგენლობა", matches: "მატჩები", history: "ისტორია", gallery: "გალერეა", contact: "კონტაქტი" },
@@ -88,7 +88,7 @@ export const dict = {
   en: {
     clubFull: "FC Mertskhali 1925",
     clubShort: "Mertskhali",
-    clubSub: "Ozurgeti · 1925",
+    clubSub: "Ozurgeti · Guria",
     metaTitle: "FC Mertskhali 1925 — Ozurgeti",
     metaDesc: "Official website of FC Mertskhali Ozurgeti: news, squad, fixtures, results and league table.",
     nav: { home: "Home", news: "News", squad: "Squad", matches: "Matches", history: "History", gallery: "Gallery", contact: "Contact" },

@@ -26,7 +26,7 @@ export default function SiteHeader({ lang }: { lang: Lang }) {
         <Link href={L(lang, "/")} className="brand">
           <img src="/logo.png" alt={d.clubFull} width={52} height={52} />
           <span>
-            <span className="brand-name">{d.clubShort}</span>
+            <span className="brand-name">{d.clubFull}</span>
             <span className="brand-sub">{d.clubSub}</span>
           </span>
         </Link>
