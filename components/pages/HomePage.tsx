@@ -64,11 +64,11 @@ export default async function HomePage({ lang }: { lang: Lang }) {
                 ))}
               </div>
             ) : (
-              <p className="muted">{lang === "ka" ? "უახლესი პოსტები კლუბის Facebook გვერდიდან:" : "Latest posts from the club's Facebook page:"}</p>
+              <p className="muted">{d.newsSoon}</p>
             )}
           </div>
           <aside className="fb-col" aria-label="Facebook">
-            <FacebookFeed lang={lang} height={news.length ? 640 : 760} />
+            <FacebookFeed lang={lang} />
           </aside>
         </div>
       </section>

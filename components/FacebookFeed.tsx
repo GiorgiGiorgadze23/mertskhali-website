@@ -1,17 +1,18 @@
 import { CONTACT } from "@/lib/club";
 import type { Lang } from "@/lib/i18n";
 
-// Facebook's official Page plugin: shows the latest public posts of the club page.
-// Needs no admin access or token. Width is capped by Facebook at 500px.
-export default function FacebookFeed({ lang, height = 720 }: { lang: Lang; height?: number }) {
+// Facebook's official Page plugin as a compact "follow" card (logo, name, follow button).
+// The post timeline is left out: Facebook hides it from visitors who are not logged in,
+// which leaves a large empty box. Posts reach the site through the automatic import instead.
+export default function FacebookFeed({ lang, height = 130 }: { lang: Lang; height?: number }) {
   const src =
     "https://www.facebook.com/plugins/page.php?" +
     new URLSearchParams({
       href: CONTACT.facebook,
-      tabs: "timeline",
+      tabs: "",
       width: "500",
       height: String(height),
-      small_header: "true",
+      small_header: "false",
       adapt_container_width: "true",
       hide_cover: "false",
       show_facepile: "false",
