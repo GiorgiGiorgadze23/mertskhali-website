@@ -32,8 +32,8 @@ export default function SiteHeader({ lang }: { lang: Lang }) {
         </Link>
         <div className="header-tools">
           <a href={L(other, path)} className="lang-switch" hrefLang={other} aria-label={d.switchLabel}>
-            {lang === "ka" ? "EN" : "ქარ"}
-            <span className="lang-long">{lang === "ka" ? "glish" : "თული"}</span>
+            <span className="lang-short">{lang === "ka" ? "EN" : "ქარ"}</span>
+            <span className="lang-long">{d.switchTo}</span>
           </a>
           <button
             type="button"
