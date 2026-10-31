@@ -1,0 +1,26 @@
+{
+  "name": "mertskhali-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ს.კ მერცხალი 1925 — ოფიციალური ვებსაიტი ადმინ პანელით",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "next": "^16.4.3",
+    "node-html-parser": "^9.0.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "~5.9.0"
+  }
+}
