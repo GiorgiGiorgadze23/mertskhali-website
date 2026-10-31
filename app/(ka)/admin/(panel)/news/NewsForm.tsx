@@ -65,6 +65,9 @@ export default function NewsForm({ news }: { news?: News }) {
             <textarea name="body" rows={12} defaultValue={news?.body ?? ""} placeholder="აბზაცები გამოყავით ცარიელი ხაზით." style={{ fontSize: 16, lineHeight: 1.7 }} />
           </label>
           <label className="check"><input type="checkbox" name="featured" defaultChecked={news?.featured} />მთავარ გვერდზე გამორჩეულად ჩვენება</label>
+          {!news?.published && (
+            <label className="check"><input type="checkbox" name="notify" value="off" />აპლიკაციაში შეტყობინება არ გაიგზავნოს</label>
+          )}
           <details open={!!news?.title_en} style={{ borderTop: "1px solid #eceef3", paddingTop: 16 }}>
             <summary style={{ cursor: "pointer", fontWeight: 700, minHeight: 32 }}>English version (არასავალდებულო)</summary>
             {news?.title_en && <input type="hidden" name="had_en" value="1" />}

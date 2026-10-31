@@ -6,6 +6,7 @@ import { sessionClient } from "@/lib/supabase/clients";
 import { makeSlug } from "@/lib/slug";
 import { CATEGORIES, type Player } from "@/lib/types";
 import { syncGff } from "@/lib/gff";
+import { notifyNews } from "@/lib/push";
 
 type State = { ok: boolean; error: string };
 
@@ -76,7 +77,10 @@ export async function saveNews(_: State, form: FormData): Promise<State> {
     return { ok: false, error: (e as Error).message };
   }
   let slug: string;
+  let wasPublished = false;
   if (id) {
+    const prev = await db.from("news").select("published").eq("id", id).maybeSingle();
+    wasPublished = !!prev.data?.published;
     const { data, error } = await db.from("news").update(row).eq("id", id).select("slug").single();
     if (error) return { ok: false, error: error.message };
     slug = data.slug;
@@ -87,6 +91,10 @@ export async function saveNews(_: State, form: FormData): Promise<State> {
   }
   refreshPublic(slug);
   revalidatePath("/admin");
+  // First time an article goes public → notify app users (never blocks saving).
+  if (publish && !wasPublished && form.get("notify") !== "off") {
+    await notifyNews({ slug, title, title_en: en.title_en, excerpt: row.excerpt as string | null, excerpt_en: en.excerpt_en }).catch(() => null);
+  }
   redirect("/admin?saved=1");
 }
 
