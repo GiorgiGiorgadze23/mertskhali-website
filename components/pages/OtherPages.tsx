@@ -119,7 +119,14 @@ export function HistoryPage({ lang }: { lang: Lang }) {
       </section>
       <section className="container" style={{ paddingBottom: 80 }}>
         <div className="card" style={{ overflow: "hidden", display: "flex", flexWrap: "wrap" }}>
-          <div className="ph" style={{ flex: "1 1 420px", minHeight: 300, borderRadius: 0 }}>{d.stadiumName}</div>
+          <img
+            src="/stadium.jpg"
+            alt={d.stadiumName}
+            width={1600}
+            height={847}
+            loading="lazy"
+            style={{ flex: "1 1 420px", minWidth: 0, width: "100%", minHeight: 260, maxHeight: 420, objectFit: "cover" }}
+          />
           <div style={{ flex: "1 1 380px", padding: 36, display: "flex", flexDirection: "column", gap: 14 }}>
             <span className="muted" style={{ fontSize: 13, fontWeight: 700, letterSpacing: ".1em" }}>{d.stadiumEyebrow}</span>
             <h2 className="display" style={{ fontSize: 30 }}>{d.stadiumName}</h2>
