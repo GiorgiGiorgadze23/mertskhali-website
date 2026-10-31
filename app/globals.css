@@ -254,6 +254,11 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 
 /* gallery — archive photos */
 .archive-title { font-family: var(--serif); font-weight: 700; font-size: 24px; margin-top: 8px; }
+.archive-source { display: flex; gap: 16px; align-items: center; margin-top: 18px; padding: 14px 18px 14px 14px; background: #fff; border: 1px solid var(--line); border-left: 4px solid #3f8a6b; border-radius: 10px; max-width: 620px; }
+.archive-source img { width: 64px; height: auto; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,.18); flex: none; }
+.archive-source div { display: flex; flex-direction: column; gap: 2px; font-size: 14px; color: var(--text-2); }
+.archive-source .label { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--muted); text-transform: uppercase; }
+.archive-source b { font-size: 16px; color: var(--ink); }
 .archive { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 24px; margin-top: 24px; align-items: start; }
 .archive-item { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(14,26,58,.04); }
 .archive-item a { position: relative; display: block; background: #1b1a17; }

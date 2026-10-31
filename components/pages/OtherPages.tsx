@@ -148,6 +148,15 @@ export async function GalleryPage({ lang }: { lang: Lang }) {
         <h1 className="h1" style={{ marginBottom: 8 }}>{d.galleryTitle}</h1>
         <h2 className="archive-title">{d.archiveTitle}</h2>
         <p className="muted" style={{ marginTop: 6 }}>{d.archiveSub}</p>
+        <aside className="archive-source">
+          <img src="/history/book-cover.jpg" alt={d.sourceBookTitle} width={110} height={160} loading="lazy" />
+          <div>
+            <span className="label">{d.sourceLabel}</span>
+            <b>{d.sourceBookTitle}</b>
+            <span>{d.sourceBookAuthors}</span>
+            <span className="muted">{d.sourceBookSeries}</span>
+          </div>
+        </aside>
         <div className="archive">
           {HISTORY_PHOTOS.map((p) => (
             <figure key={p.src} className={`archive-item${p.featured ? " featured" : ""}`}>
