@@ -4,7 +4,7 @@ import FontLinks from "@/components/FontLinks";
 import { dict } from "@/lib/i18n";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mertskhali-website.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://mertskhali1925.com"),
   title: { default: dict.ka.metaTitle, template: "%s · მერცხალი" },
   description: dict.ka.metaDesc,
   openGraph: { images: ["/logo-512.png"], locale: "ka_GE" },

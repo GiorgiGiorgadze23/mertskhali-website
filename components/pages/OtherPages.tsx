@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HISTORY_PHOTOS } from "@/lib/history";
 import LeagueTable from "@/components/LeagueTable";
 import MatchRow from "@/components/MatchRow";
 import ContactForm from "@/components/ContactForm";
@@ -142,21 +143,40 @@ export async function GalleryPage({ lang }: { lang: Lang }) {
   const d = t(lang);
   const items = await getGallery();
   return (
-    <section className="container section">
-      <h1 className="h1" style={{ marginBottom: 24 }}>{d.galleryTitle}</h1>
-      {items.length ? (
-        <div className="gallery">
-          {items.map((g) => (
-            <figure key={g.id}>
-              <img src={g.image_url} alt={g.caption ?? ""} loading="lazy" />
-              {g.caption && <figcaption>{g.caption}</figcaption>}
+    <>
+      <section className="container section" style={{ paddingBottom: 24 }}>
+        <h1 className="h1" style={{ marginBottom: 8 }}>{d.galleryTitle}</h1>
+        <h2 className="archive-title">{d.archiveTitle}</h2>
+        <p className="muted" style={{ marginTop: 6 }}>{d.archiveSub}</p>
+        <div className="archive">
+          {HISTORY_PHOTOS.map((p) => (
+            <figure key={p.src} className="archive-item">
+              <a href={p.src} target="_blank" rel="noopener" aria-label={`${p.year} — ${p.title[lang]}`}>
+                <img src={p.src} alt={`${p.year}. ${p.title[lang]}`} width={p.w} height={p.h} loading="lazy" />
+                <span className="year">{p.year}</span>
+              </a>
+              <figcaption>
+                <b>{p.title[lang]}</b>
+                {p.names && lang === "ka" && <span className="names">{p.names}</span>}
+              </figcaption>
             </figure>
           ))}
         </div>
-      ) : (
-        <p className="muted">{d.photosSoon}</p>
+      </section>
+      {items.length > 0 && (
+        <section className="container section" style={{ paddingTop: 24 }}>
+          <h2 className="archive-title" style={{ marginBottom: 20 }}>{d.recentPhotos}</h2>
+          <div className="gallery">
+            {items.map((g) => (
+              <figure key={g.id}>
+                <img src={g.image_url} alt={g.caption ?? ""} loading="lazy" />
+                {g.caption && <figcaption>{g.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
       )}
-    </section>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 # სკ მერცხალი 1925 — iOS & Android app
 
 Expo (React Native) app, one codebase for iPhone and Android. It reads everything from the website
-(`https://mertskhali-website.vercel.app/api/v1/...`), so news you publish in `/admin` appear in the app automatically.
+(`https://mertskhali1925.com/api/v1/...`), so news you publish in `/admin` appear in the app automatically.
 
 **Tabs:** Home · News (with categories) · Matches & table · Squad · More (language, history, contact).
 Georgian/English switch; opens offline with the last loaded data; pull down to refresh.

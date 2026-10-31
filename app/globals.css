@@ -252,6 +252,17 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 .article .cover { border-radius: 10px; overflow: hidden; }
 .article .body p { font-size: 18px; line-height: 1.75; margin-bottom: 1em; white-space: pre-line; }
 
+/* gallery — archive photos */
+.archive-title { font-family: var(--serif); font-weight: 700; font-size: 24px; margin-top: 8px; }
+.archive { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 24px; margin-top: 24px; align-items: start; }
+.archive-item { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(14,26,58,.04); }
+.archive-item a { position: relative; display: block; background: #1b1a17; }
+.archive-item img { width: 100%; height: auto; transition: opacity .2s; }
+.archive-item a:hover img { opacity: .92; }
+.archive-item .year { position: absolute; left: 12px; top: 12px; background: var(--ink); color: #fff; font-family: var(--serif); font-weight: 700; font-size: 15px; padding: 4px 10px; border-radius: 6px; }
+.archive-item figcaption { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+.archive-item figcaption b { font-size: 16px; color: var(--ink); }
+.archive-item .names { font-size: 13px; line-height: 1.55; color: var(--muted); }
 /* gallery */
 .gallery { columns: 3 280px; column-gap: 16px; }
 .gallery figure { margin: 0 0 16px; break-inside: avoid; border-radius: 10px; overflow: hidden; background: var(--ph); }
