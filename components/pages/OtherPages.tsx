@@ -158,7 +158,7 @@ export async function GalleryPage({ lang }: { lang: Lang }) {
           </div>
         </aside>
         <div className="archive">
-          {HISTORY_PHOTOS.map((p) => (
+          {[...HISTORY_PHOTOS].sort((x, y) => y.year - x.year).map((p) => (
             <figure key={p.src} className={`archive-item${p.featured ? " featured" : ""}`}>
               <a href={p.src} target="_blank" rel="noopener" aria-label={`${p.yearLabel?.[lang] ?? p.year} — ${p.title[lang]}`}>
                 <img src={p.src} alt={`${p.yearLabel?.[lang] ?? p.year}. ${p.title[lang]}`} width={p.w} height={p.h} loading="lazy" />
