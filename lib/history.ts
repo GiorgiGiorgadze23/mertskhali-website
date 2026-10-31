@@ -1,7 +1,21 @@
 // Archive team photos (from the club history book), restored and stored in /public/history.
-export type HistoryPhoto = { src: string; year: number; w: number; h: number; title: { ka: string; en: string }; details?: { ka: string; en: string }; names?: string; featured?: boolean };
+export type HistoryPhoto = { src: string; year: number; yearLabel?: { ka: string; en: string }; w: number; h: number; title: { ka: string; en: string }; details?: { ka: string; en: string }; names?: string; featured?: boolean };
 
 export const HISTORY_PHOTOS: HistoryPhoto[] = [
+  {
+    src: "/history/history-1950s.jpg",
+    year: 1950,
+    yearLabel: { ka: "1950-იანი", en: "1950s" },
+    w: 1600,
+    h: 998,
+    featured: true,
+    title: { ka: "შემოქმედის ფეხბურთელთა გუნდი", en: "Shemokmedi football team" },
+    details: {
+      ka: "ოზურგეთის ფეხბურთის ისტორიიდან. სავარაუდოდ 1950–1954 წლები. 1954 წელს გუნდი მონაწილეობდა საქართველოს პირველობის რეგიონულ გათამაშებაში. მწვრთნელი — ტოგო დუმბაძე.",
+      en: "From the history of football in Ozurgeti. Probably 1950–1954. In 1954 the team played in the regional stage of the Georgian championship. Coach: Togo Dumbadze.",
+    },
+    names: "მარცხნიდან პირველი — გივი დუმბაძე, მეორე — დიმიტრი დუმბაძე. დანარჩენებს თუ იცნობთ, მოგვწერეთ.",
+  },
   {
     src: "/history/history-1982.jpg",
     year: 1982,
