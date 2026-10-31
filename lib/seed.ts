@@ -594,6 +594,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p1",
   "name": "ბესიკ გოლიაძე",
+  "name_en": "Besik Goliadze",
   "position": "GK",
   "number": null,
   "birth_year": 1994,
@@ -603,6 +604,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p2",
   "name": "ლუკა ლომაძე",
+  "name_en": "Luka Lomadze",
   "position": "GK",
   "number": null,
   "birth_year": null,
@@ -612,6 +614,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p3",
   "name": "ნიკოლოზ რამიშვილი",
+  "name_en": "Nikoloz Ramishvili",
   "position": "GK",
   "number": null,
   "birth_year": 2006,
@@ -621,6 +624,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p4",
   "name": "გოჩა პაიჭაძე",
+  "name_en": "Gocha Paichadze",
   "position": "DF",
   "number": "3",
   "birth_year": 2004,
@@ -630,6 +634,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p5",
   "name": "რომან მორჩილაძე",
+  "name_en": "Roman Morchiladze",
   "position": "DF",
   "number": null,
   "birth_year": 2004,
@@ -639,6 +644,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p6",
   "name": "გიორგი კაჭეიშვილი",
+  "name_en": "Giorgi Kacheishvili",
   "position": "DF",
   "number": null,
   "birth_year": 1994,
@@ -648,6 +654,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p7",
   "name": "ნიკა აფხაზავა",
+  "name_en": "Nika Apkhazava",
   "position": "DF",
   "number": null,
   "birth_year": 1995,
@@ -657,6 +664,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p8",
   "name": "დავით მამალაძე",
+  "name_en": "Davit Mamaladze",
   "position": "DF",
   "number": null,
   "birth_year": 1998,
@@ -666,6 +674,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p9",
   "name": "ზაზა თუღუში",
+  "name_en": "Zaza Tughushi",
   "position": "DF",
   "number": null,
   "birth_year": 1982,
@@ -675,6 +684,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p10",
   "name": "გოგიტა ხამაშურიძე",
+  "name_en": "Gogita Khamashuridze",
   "position": "DF",
   "number": null,
   "birth_year": 1984,
@@ -684,6 +694,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p11",
   "name": "ვაჟა რამიშვილი",
+  "name_en": "Vazha Ramishvili",
   "position": "DF",
   "number": null,
   "birth_year": 1985,
@@ -693,6 +704,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p12",
   "name": "თემურ ჩხატარაშვილი",
+  "name_en": "Temur Chkhatarashvili",
   "position": "DF",
   "number": null,
   "birth_year": 1988,
@@ -702,6 +714,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p13",
   "name": "გიორგი გოგუა",
+  "name_en": "Giorgi Gogua",
   "position": "MF",
   "number": "7",
   "birth_year": 1994,
@@ -711,6 +724,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p14",
   "name": "გიორგი ქაშია",
+  "name_en": "Giorgi Kashia",
   "position": "MF",
   "number": null,
   "birth_year": 1995,
@@ -720,6 +734,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p15",
   "name": "თენგიზ ალიევი",
+  "name_en": "Tengiz Alievi",
   "position": "MF",
   "number": null,
   "birth_year": 1999,
@@ -729,6 +744,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p16",
   "name": "კოკა შენგელია",
+  "name_en": "Koka Shengelia",
   "position": "MF",
   "number": null,
   "birth_year": 2000,
@@ -738,6 +754,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p17",
   "name": "დავით ბოლქვაძე",
+  "name_en": "David Bolkvadze",
   "position": "MF",
   "number": null,
   "birth_year": 1980,
@@ -747,6 +764,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p18",
   "name": "გიორგი ჭანუყვაძე",
+  "name_en": "Giorgi Tchanukvadze",
   "position": "MF",
   "number": null,
   "birth_year": 1995,
@@ -756,6 +774,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p19",
   "name": "გიორგი გოგელია",
+  "name_en": "Giorgi Gogelia",
   "position": "MF",
   "number": null,
   "birth_year": 2001,
@@ -765,6 +784,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p20",
   "name": "საბა ვაშალომიძე",
+  "name_en": "Saba Vashalomidze",
   "position": "MF",
   "number": null,
   "birth_year": 2005,
@@ -774,6 +794,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p21",
   "name": "ლაშა კოტრიკაძე",
+  "name_en": "Lasha Kotrikadze",
   "position": "MF",
   "number": null,
   "birth_year": 1993,
@@ -783,6 +804,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p22",
   "name": "ნოდარ მაჭავარიანი",
+  "name_en": "Nodar Machavariani",
   "position": "MF",
   "number": null,
   "birth_year": 1993,
@@ -792,6 +814,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p23",
   "name": "ელგუჯა ჩხაიძე",
+  "name_en": "Elguja Chkhaidze",
   "position": "MF",
   "number": null,
   "birth_year": 1996,
@@ -801,6 +824,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p24",
   "name": "ლევან ათუაშვილი",
+  "name_en": "Levan Atuashvili",
   "position": "MF",
   "number": null,
   "birth_year": 1990,
@@ -810,6 +834,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p25",
   "name": "სერგო ჩიგოგიძე",
+  "name_en": "Sergo Chigogidze",
   "position": "MF",
   "number": null,
   "birth_year": 1988,
@@ -819,6 +844,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p26",
   "name": "ილია ხეცურიანი",
+  "name_en": "Ilia Khetsuriani",
   "position": "MF",
   "number": null,
   "birth_year": 1993,
@@ -828,6 +854,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p27",
   "name": "გრიგოლ ბერიშვილი",
+  "name_en": "Grigol Berishvili",
   "position": "MF",
   "number": null,
   "birth_year": 1993,
@@ -837,6 +864,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p28",
   "name": "გიორგი გვაძგავა",
+  "name_en": "Giorgi Gvadsgava",
   "position": "MF",
   "number": null,
   "birth_year": 1995,
@@ -846,6 +874,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p29",
   "name": "ვახტანგ ჯაყელი",
+  "name_en": "Vakhtang Jakeli",
   "position": "FW",
   "number": null,
   "birth_year": 1992,
@@ -855,6 +884,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p30",
   "name": "გიგა ამბროლაძე",
+  "name_en": "Giga Ambroladze",
   "position": "FW",
   "number": null,
   "birth_year": 1990,
@@ -864,6 +894,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p31",
   "name": "დიმიტრი ჯაფარიძე",
+  "name_en": "Dimitri Japaridze",
   "position": "FW",
   "number": null,
   "birth_year": 1999,
@@ -873,6 +904,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p32",
   "name": "დავით ვაშაკიძე",
+  "name_en": "Davit Vashakidze",
   "position": "FW",
   "number": null,
   "birth_year": 1991,
@@ -882,6 +914,7 @@ export const seedPlayers: Player[] = [
  {
   "id": "p33",
   "name": "ლუკა მჟავანაძე",
+  "name_en": "Luka Mzhavanadze",
   "position": "FW",
   "number": null,
   "birth_year": 2004,

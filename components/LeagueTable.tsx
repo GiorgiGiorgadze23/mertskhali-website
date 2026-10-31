@@ -1,24 +1,26 @@
 import type { Standing } from "@/lib/types";
 import { isUs } from "@/lib/data";
+import { t, teamName, type Lang } from "@/lib/i18n";
 
-export default function LeagueTable({ rows, compact = false }: { rows: Standing[]; compact?: boolean }) {
+export default function LeagueTable({ rows, compact = false, lang = "ka" }: { rows: Standing[]; compact?: boolean; lang?: Lang }) {
+  const h = t(lang).tableHead;
   return (
     <div className="table-wrap">
       <table className="league">
         <thead>
           <tr>
-            <th>#</th>
-            <th>გუნდი</th>
-            <th className="num">თ</th>
+            <th>{h.pos}</th>
+            <th>{h.team}</th>
+            <th className="num">{h.p}</th>
             {!compact && (
               <>
-                <th className="num">მ</th>
-                <th className="num">ფ</th>
-                <th className="num">წ</th>
+                <th className="num">{h.w}</th>
+                <th className="num">{h.d}</th>
+                <th className="num">{h.l}</th>
               </>
             )}
-            <th className="num">გ</th>
-            <th className="num">ქ</th>
+            <th className="num">{h.g}</th>
+            <th className="num">{h.pts}</th>
           </tr>
         </thead>
         <tbody>
@@ -27,7 +29,7 @@ export default function LeagueTable({ rows, compact = false }: { rows: Standing[
               <td>{r.pos}</td>
               <td className="team">
                 {r.logo_url && <img src={r.logo_url} alt="" width={22} height={22} loading="lazy" />}
-                {r.team}
+                {teamName(lang, r.team)}
               </td>
               <td className="num">{r.played}</td>
               {!compact && (

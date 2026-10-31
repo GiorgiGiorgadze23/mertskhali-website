@@ -2,9 +2,12 @@ export type News = {
   id: string;
   slug: string;
   title: string;
+  title_en?: string | null;
   category: string;
   excerpt: string | null;
+  excerpt_en?: string | null;
   body: string | null;
+  body_en?: string | null;
   image_url: string | null;
   featured: boolean;
   published: boolean;
@@ -15,6 +18,7 @@ export type News = {
 export type Player = {
   id: string;
   name: string;
+  name_en?: string | null;
   position: "GK" | "DF" | "MF" | "FW";
   number: string | null;
   birth_year: number | null;

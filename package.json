@@ -2,7 +2,7 @@
   "name": "mertskhali-website",
   "version": "1.0.0",
   "private": true,
-  "description": "ს.კ მერცხალი 1925 — ოფიციალური ვებსაიტი ადმინ პანელით",
+  "description": "სკ მერცხალი 1925 — ოფიციალური ვებსაიტი ადმინ პანელით",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

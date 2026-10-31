@@ -1,22 +1,24 @@
 import Link from "next/link";
 import { CONTACT } from "@/lib/club";
+import { L, t, type Lang } from "@/lib/i18n";
 
-export default function SiteFooter() {
+export default function SiteFooter({ lang }: { lang: Lang }) {
+  const d = t(lang);
   return (
     <footer className="site-footer">
       <div className="inner">
         <div>
-          <strong>ს.კ მერცხალი 1925</strong>
-          <div>{CONTACT.address}</div>
+          <strong>{d.clubFull}</strong>
+          <div>{d.address}</div>
           <div>
             {CONTACT.phone} · {CONTACT.email}
           </div>
         </div>
-        <nav aria-label="ქვედა მენიუ">
-          <Link href="/contact">კონტაქტი</Link>
+        <nav aria-label={d.footerMenu}>
+          <Link href={L(lang, "/contact")}>{d.nav.contact}</Link>
           <a href={CONTACT.facebook} target="_blank" rel="noopener">Facebook</a>
-          <a href="https://liga.gff.ge/?season=44&league=4" target="_blank" rel="noopener">ლიგა 4 — GFF</a>
-          <Link href="/admin">ადმინისტრატორი</Link>
+          <a href="https://liga.gff.ge/?season=44&league=4" target="_blank" rel="noopener">{d.league} — GFF</a>
+          <Link href="/admin">{d.admin}</Link>
         </nav>
       </div>
     </footer>

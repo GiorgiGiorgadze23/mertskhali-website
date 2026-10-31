@@ -1,10 +1,10 @@
-# ს.კ მერცხალი 1925 — website
+# სკ მერცხალი 1925 — website
 
 Next.js 16 site with an admin panel. Data lives in Supabase (free tier); the site runs on Vercel (free tier).
 League table, fixtures and results sync from liga.gff.ge every morning automatically.
 
 **What's included**
-- Public pages: Home, News (+ article pages), Squad, Matches & table, History, Gallery, Contact
+- Public pages in Georgian (`/`) and English (`/en`), with a language switch in the header: Home, News (+ article pages), Squad, Matches & table, History, Gallery, Contact
 - `/admin`: sign-in; news (create / edit / delete, photo upload, draft or publish, “featured on home”); squad editor with photos; gallery uploads; contact-form inbox; “sync GFF now” button
 - Daily GFF sync at 08:00 Tbilisi time (`vercel.json` → `/api/sync-gff`)
 - Until the database is connected, pages show the 31 Oct 2026 snapshot bundled in `lib/seed.ts`
@@ -17,6 +17,7 @@ League table, fixtures and results sync from liga.gff.ge every morning automatic
 1. Create a free account at **supabase.com** → **New project** (region: *Central EU (Frankfurt)*). Save the database password somewhere safe.
 2. **SQL Editor → New query** → paste all of `supabase/schema.sql` → **Run**.
 3. New query again → paste `supabase/seed.sql` → **Run** (loads the squad, table and matches).
+3b. New query again → paste `supabase/002_english.sql` → **Run** (English news fields and English player names).
 4. **Authentication → Sign In / Providers → Email**: turn **“Allow new users to sign up” OFF**. (Only people you add can log in.)
 5. **Authentication → Users → Add user → Create new user**: your email + a strong password, tick “Auto confirm”. Repeat for anyone else who should post news.
 6. **Project Settings → API**: keep this tab open — you need *Project URL*, *anon public* key and *service_role* key in step 3.
@@ -49,6 +50,7 @@ League table, fixtures and results sync from liga.gff.ge every morning automatic
 
 ## Everyday use
 - **Post news:** `/admin` → **+ ახალი სიახლე** → title, category, photo, text → **გამოქვეყნება**. It appears on the site within seconds.
+- **English:** in the news form, open **English version** and fill in title/text. Left empty, the English site shows the Georgian text.
 - **Squad:** `/admin/squad` — fix names/numbers, add photos, add or remove players.
 - **Gallery:** `/admin/gallery` — upload several photos at once.
 - **Messages:** contact-form messages arrive in `/admin/messages`.

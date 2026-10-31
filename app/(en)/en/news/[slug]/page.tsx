@@ -1,0 +1,13 @@
+import { ArticlePage, articleMetadata } from "@/components/pages/NewsPages";
+
+export const revalidate = 120;
+
+type P = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: P) {
+  return articleMetadata("en", (await params).slug);
+}
+
+export default async function Page({ params }: P) {
+  return <ArticlePage lang="en" slug={(await params).slug} />;
+}
