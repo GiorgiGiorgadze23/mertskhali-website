@@ -64,6 +64,7 @@ export const dict = {
     events: [
       ["1925", "კლუბის დაარსება", "ოზურგეთში იქმნება საფეხბურთო გუნდი — მერცხალი. 2025 წელს კლუბმა 100 წლის იუბილე აღნიშნა."],
       ["1938", "მთავარ ლიგაში", "მეორე დივიზიონში მეორე ადგილი და გადასვლა საბჭოთა საქართველოს ჩემპიონატის მთავარ ლიგაში."],
+      ["1956", "„კოლმეურნის“ თასი", "2 სექტემბერს, თბილისში, საქართველოს „კოლმეურნის“ თასის ფინალში მახარაძის „კოლმეურნემ“ ქობულეთის „შუქურა“ 1:0 დაამარცხა და საქართველოს „კოლმეურნის“ ჩემპიონი გახდა."],
       ["1958", "პირველი ბრინჯაო", "კლუბი პირველად იღებს ჩემპიონატის ბრინჯაოს მედლებს."],
       ["1982", "თასი და ყველა ტიტული", "4 სექტემბერს, თბილისის „დინამოს“ ცენტრალურ სტადიონზე, საქართველოს თასის ფინალში მახარაძის „მერცხალმა“ თბილისის „ზოვეტი“ 4:1 დაამარცხა. ამ წელს გუნდმა მოიგო ყველაფერი, რაც მოსაგები იყო."],
       ["1982–87", "ოქროს ხანა", "გუნდის უფროსის, ბახვა გიორგაძის ხელმძღვანელობით გუნდი ხუთ მედალს აგროვებს — კლუბის ისტორიის ყველაზე გამორჩეული პერიოდი."],
@@ -155,6 +156,7 @@ export const dict = {
     events: [
       ["1925", "The club is founded", "A football team is formed in Ozurgeti — Mertskhali (“Swallow”). In 2025 the club celebrated its centenary."],
       ["1938", "Into the top league", "Runners-up in the second division and promotion to the top league of the Soviet Georgian championship."],
+      ["1956", "The Kolmeurne Cup", "On 2 September in Tbilisi, Kolmeurne Makharadze beat Shukura Kobuleti 1–0 in the Georgian Kolmeurne Cup final and became Georgian Kolmeurne champions."],
       ["1958", "First bronze", "The club wins championship bronze medals for the first time."],
       ["1982", "The cup and every title", "On 4 September, at Dinamo Central Stadium in Tbilisi, Mertskhali Makharadze beat Zovet Tbilisi 4–1 in the Georgian Cup final. That year the team won everything there was to win."],
       ["1982–87", "The golden era", "Under team chief Bakhva Giorgadze the team collects five medals — the most remarkable period in the club’s history."],

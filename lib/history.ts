@@ -17,6 +17,23 @@ export const HISTORY_PHOTOS: HistoryPhoto[] = [
     names: "მარცხნიდან პირველი: გივი დუმბაძე, დიმიტრი დუმბაძე. დანარჩენი უცნობია.",
   },
   {
+    src: "/history/history-1956.jpg",
+    year: 1956,
+    w: 1440,
+    h: 1056,
+    featured: true,
+    title: {
+      ka: "მახარაძის „კოლმეურნე“ — საქართველოს „კოლმეურნის“ ჩემპიონი",
+      en: "Kolmeurne Makharadze — Georgian Kolmeurne champions",
+    },
+    details: {
+      ka: "1956 წლის 2 სექტემბერი, თბილისი. საქართველოს ნ.ს.ს. „კოლმეურნის“ თასის ფინალი: მახარაძის „კოლმეურნე“ – ქობულეთის „შუქურა“ 1:0. წყარო: გაზეთი „ლენინის დროშა“, 1956.",
+      en: "2 September 1956, Tbilisi. Final of the Georgian Kolmeurne sports society cup: Kolmeurne Makharadze 1–0 Shukura Kobuleti. Source: Lenin's Flag newspaper, 1956.",
+    },
+    names:
+      "მარცხნიდან მარჯვნივ, ზედა რიგში: დ. მასხულია (მწვრთნელი), ა. ხურციძე (გუნდის კაპიტანი), ზ. კობახიძე, გ. სიმონიშვილი, რ. სალუქვაძე, რ. ცერცვაძე, მ. ტაბიძე. ქვედა რიგში: გ. მექვაბიშვილი, შ. დოლიძე, ვ. გვარამაძე, რ. ხომერიკი, ნ. ბახტაძე, რ. ღლონტი, ხ. დუმბაძე.",
+  },
+  {
     src: "/history/history-1975.jpg",
     year: 1975,
     w: 1440,
