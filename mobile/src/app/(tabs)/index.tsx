@@ -95,7 +95,7 @@ export default function Home() {
               <Text style={{ color: C.blue, fontWeight: "700" }}>{d.fullTable}</Text>
             </Pressable>
           </View>
-          <TableCard rows={rows.slice(start, start + 5)} compact />
+          <TableCard rows={rows.slice(start, start + 5)} compact total={rows.length} />
         </>
       ) : null}
     </Screen>

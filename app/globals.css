@@ -150,6 +150,15 @@ table.league th { text-align: left; color: var(--muted); font-size: 13px; paddin
 table.league td { padding: 11px 6px; border-top: 1px solid #ecebe5; }
 table.league .num { text-align: right; white-space: nowrap; }
 table.league tr.us { background: var(--highlight); font-weight: 700; }
+table.league td.pos { border-left: 4px solid transparent; padding-left: 8px; }
+table.league tr.zone-up td.pos { border-left-color: #2e9e5b; color: #1d5b34; font-weight: 700; }
+table.league tr.zone-down td.pos { border-left-color: #d0342c; color: #8a1c14; font-weight: 700; }
+table.league tr.zone-up:not(.us) { background: #f1f8f3; }
+table.league tr.zone-down:not(.us) { background: #fcf1f0; }
+.zone-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font-size: 12px; color: var(--muted); }
+.zone-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.zl { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+.zl.up { background: #2e9e5b; } .zl.down { background: #d0342c; }
 table.league td.team { width: 100%; line-height: 1.3; }
 table.league td.team img { display: inline-block; vertical-align: -5px; margin-right: 8px; }
 table.league td.team img { width: 20px; height: 20px; object-fit: contain; }

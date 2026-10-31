@@ -1,9 +1,12 @@
 import type { Standing } from "@/lib/types";
 import { isUs } from "@/lib/data";
 import { t, teamName, type Lang } from "@/lib/i18n";
+import { zoneOf } from "@/lib/club";
 
-export default function LeagueTable({ rows, compact = false, lang = "ka" }: { rows: Standing[]; compact?: boolean; lang?: Lang }) {
-  const h = t(lang).tableHead;
+export default function LeagueTable({ rows, compact = false, lang = "ka", total, legend = !compact }: { rows: Standing[]; compact?: boolean; lang?: Lang; total?: number; legend?: boolean }) {
+  const d = t(lang);
+  const h = d.tableHead;
+  const n = total ?? rows.length;
   return (
     <div className="table-wrap">
       <table className="league">
@@ -25,8 +28,8 @@ export default function LeagueTable({ rows, compact = false, lang = "ka" }: { ro
         </thead>
         <tbody>
           {rows.map((r) => (
-            <tr key={r.pos} className={isUs(r.team) ? "us" : undefined}>
-              <td>{r.pos}</td>
+            <tr key={r.pos} className={[isUs(r.team) ? "us" : "", zoneOf(r.pos, n) ? `zone-${zoneOf(r.pos, n)}` : ""].join(" ").trim() || undefined}>
+              <td className="pos">{r.pos}</td>
               <td className="team">
                 {r.logo_url && <img src={r.logo_url} alt="" width={22} height={22} loading="lazy" />}
                 {teamName(lang, r.team)}
@@ -49,6 +52,12 @@ export default function LeagueTable({ rows, compact = false, lang = "ka" }: { ro
           ))}
         </tbody>
       </table>
+      {legend && (
+        <div className="zone-legend">
+          <span><i className="zl up" aria-hidden="true" />{d.zoneUp}</span>
+          <span><i className="zl down" aria-hidden="true" />{d.zoneDown}</span>
+        </div>
+      )}
     </div>
   );
 }

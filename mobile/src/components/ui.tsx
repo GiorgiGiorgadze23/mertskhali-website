@@ -102,10 +102,13 @@ export function MatchCard({ m }: { m: Match }) {
   );
 }
 
-export function TableCard({ rows, compact }: { rows: Standing[]; compact?: boolean }) {
+export function TableCard({ rows, compact, total }: { rows: Standing[]; compact?: boolean; total?: number }) {
   const { lang, d } = useLang();
   const h = d.tableHead;
   const cols = compact ? (["p", "g", "pts"] as const) : (["p", "w", "d", "l", "g", "pts"] as const);
+  const n = total ?? rows.length;
+  const zone = (pos: number) => (pos <= 3 ? "up" : n && pos > n - 4 ? "down" : null);
+  const ZC = { up: { bar: "#2E9E5B", bg: "#F1F8F3", fg: "#1D5B34" }, down: { bar: "#D0342C", bg: "#FCF1F0", fg: "#8A1C14" } } as const;
   const val = (r: Standing, c: (typeof cols)[number]) =>
     c === "p" ? r.played : c === "w" ? r.won : c === "d" ? r.drawn : c === "l" ? r.lost : c === "g" ? `${r.goals_for}-${r.goals_against}` : r.points;
   return (
@@ -119,9 +122,10 @@ export function TableCard({ rows, compact }: { rows: Standing[]; compact?: boole
       </View>
       {rows.map((r) => {
         const us = isUs(r.team);
+        const z = zone(r.pos);
         return (
-          <View key={r.pos} style={[s.row, us && { backgroundColor: C.highlight }]}>
-            <Text style={[s.cellPos, us && s.us]}>{r.pos}</Text>
+          <View key={r.pos} style={[s.row, z && { backgroundColor: ZC[z].bg, borderLeftWidth: 4, borderLeftColor: ZC[z].bar, paddingLeft: 8 }, us && { backgroundColor: C.highlight }]}>
+            <Text style={[s.cellPos, z && { color: ZC[z].fg, fontWeight: "700" }, us && s.us]}>{r.pos}</Text>
             <View style={[s.cellTeamWrap]}>
               {r.logo_url ? <Image source={r.logo_url} style={{ width: 18, height: 18 }} contentFit="contain" /> : null}
               <Text style={[{ color: C.ink, fontSize: 14, flexShrink: 1 }, us && s.us]} numberOfLines={1}>
@@ -134,6 +138,16 @@ export function TableCard({ rows, compact }: { rows: Standing[]; compact?: boole
           </View>
         );
       })}
+      {!compact ? (
+        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 14, padding: 12 }}>
+          {(["up", "down"] as const).map((k) => (
+            <View key={k} style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+              <View style={{ width: 12, height: 12, borderRadius: 3, backgroundColor: ZC[k].bar }} />
+              <Text style={{ fontSize: 12, color: C.muted }}>{k === "up" ? d.zoneUp : d.zoneDown}</Text>
+            </View>
+          ))}
+        </View>
+      ) : null}
     </Card>
   );
 }

@@ -103,7 +103,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
               </h2>
               <Link href={L(lang, "/matches")} className="link-strong">{d.fullTable}</Link>
             </div>
-            <LeagueTable rows={around} compact lang={lang} />
+            <LeagueTable rows={around} compact lang={lang} total={standings.length} />
           </div>
         </div>
       </section>
