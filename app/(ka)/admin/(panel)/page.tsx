@@ -4,6 +4,8 @@ import { formatDate } from "@/lib/data";
 import type { News } from "@/lib/types";
 import { deleteNews } from "../actions";
 import ConfirmButton from "./ConfirmButton";
+import FacebookButton from "./FacebookButton";
+import { facebookConfigured } from "@/lib/facebook";
 
 export default async function AdminNews({ searchParams }: { searchParams: Promise<{ saved?: string; q?: string }> }) {
   const sp = await searchParams;
@@ -19,7 +21,10 @@ export default async function AdminNews({ searchParams }: { searchParams: Promis
           <div className="muted" style={{ fontSize: 13 }}>სიახლეები</div>
           <h1 style={{ fontSize: 30, fontWeight: 800 }}>სიახლეების მართვა</h1>
         </div>
-        <Link href="/admin/news/new" className="btn btn-dark">+ ახალი სიახლე</Link>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+          {facebookConfigured() && <FacebookButton />}
+          <Link href="/admin/news/new" className="btn btn-dark">+ ახალი სიახლე</Link>
+        </div>
       </div>
       {sp.saved && <p className="notice">შენახულია.</p>}
       <form className="field" style={{ maxWidth: 360 }}>
@@ -37,7 +42,12 @@ export default async function AdminNews({ searchParams }: { searchParams: Promis
             )}
             {rows.map((n) => (
               <tr key={n.id}>
-                <td style={{ fontWeight: 700 }}>{n.title}</td>
+                <td style={{ fontWeight: 700 }}>
+                  {n.title}
+                  {n.source === "facebook" && (
+                    <a href={n.fb_url ?? "#"} target="_blank" rel="noopener" className="status" style={{ marginLeft: 8, background: "#e7efff", color: "#1d4fb3", textDecoration: "none" }}>Facebook</a>
+                  )}
+                </td>
                 <td>{n.category}</td>
                 <td className="muted">{formatDate(n.published_at ?? n.created_at)}</td>
                 <td><span className={`status ${n.published ? "pub" : "draft"}`}>{n.published ? "გამოქვეყნებული" : "მონახაზი"}</span></td>

@@ -13,6 +13,8 @@ export type News = {
   published: boolean;
   published_at: string | null;
   created_at: string;
+  source?: string | null;
+  fb_url?: string | null;
 };
 
 export type Player = {

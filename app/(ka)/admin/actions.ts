@@ -7,6 +7,7 @@ import { makeSlug } from "@/lib/slug";
 import { CATEGORIES, type Player } from "@/lib/types";
 import { syncGff } from "@/lib/gff";
 import { notifyNews } from "@/lib/push";
+import { syncFacebook } from "@/lib/facebook";
 
 type State = { ok: boolean; error: string };
 
@@ -176,5 +177,17 @@ export async function syncNow(_: State): Promise<State> {
     return { ok: true, error: `განახლდა: ${r.standings} გუნდი, ${r.matches} მატჩი.` };
   } catch (e) {
     return { ok: false, error: "ვერ განახლდა: " + (e as Error).message };
+  }
+}
+
+// ---------- Facebook ----------
+export async function facebookNow(_: State): Promise<State> {
+  const db = await requireAdmin();
+  try {
+    const r = await syncFacebook(db);
+    for (const p of ["/", "/news", "/en", "/en/news", "/admin"]) revalidatePath(p);
+    return { ok: true, error: r.imported ? `დაემატა ${r.imported} სიახლე Facebook-დან.` : "ახალი პოსტი არ არის." };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
   }
 }

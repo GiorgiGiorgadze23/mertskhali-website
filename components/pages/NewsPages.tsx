@@ -89,6 +89,9 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12, borderTop: "1px solid #ecebe5", paddingTop: 20 }}>
         <a href={share} target="_blank" rel="noopener" className="btn btn-light">{d.shareFb}</a>
+        {n.fb_url && (
+          <a href={n.fb_url} target="_blank" rel="noopener" className="btn btn-light">{lang === "ka" ? "Facebook-ზე ნახვა" : "View on Facebook"}</a>
+        )}
         <Link href={L(lang, "/news")} className="btn" style={{ color: "var(--blue)" }}>{d.backToNews}</Link>
       </div>
     </article>

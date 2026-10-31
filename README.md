@@ -69,3 +69,22 @@ npm install
 cp .env.example .env.local   # fill in values
 npm run dev                  # http://localhost:3000
 ```
+
+---
+
+## Facebook → news (automatic import)
+New posts on the club's Facebook Page become published news on the site and in the app (photo copied to our storage,
+title = first sentence, app notification sent). Only **new** posts are imported — edits/hides in `/admin` are kept.
+Checks daily via Vercel, every 30 min if you run `supabase/005_facebook_schedule.sql`, or instantly with
+**Facebook-დან განახლება** in `/admin`.
+
+**Setup (must be done by a Page admin):**
+1. Supabase → SQL Editor → run `supabase/004_facebook.sql`.
+2. **developers.facebook.com** → *My Apps* → *Create app* → pick the use case for managing a Facebook Page → finish.
+3. *Tools → Graph API Explorer*: choose your app → *Get User Access Token* → tick `pages_show_list` and `pages_read_engagement` → *Generate* → allow access to „სკ მერცხალი 1925“.
+4. Click the **ⓘ** next to the token → *Open in Access Token Tool* → **Extend Access Token** → copy the long token.
+5. Back in Graph API Explorer paste that token, run `me/accounts?fields=id,name,access_token` → copy the club Page's **id** and **access_token** (this Page token does not expire).
+6. Vercel → Project → Settings → Environment Variables: `FB_PAGE_ID` = id, `FB_PAGE_TOKEN` = access_token → **Redeploy**.
+7. `/admin` → **Facebook-დან განახლება**. The first run imports the latest 25 posts without sending notifications.
+
+If the admin who created the token loses Page access or changes their Facebook password, repeat steps 3–6.
