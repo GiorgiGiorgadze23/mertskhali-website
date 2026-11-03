@@ -80,12 +80,16 @@ export default async function HomePage({ lang }: { lang: Lang }) {
           {last && (
             <div className="card score-card side">
               <h2 style={{ fontSize: 22 }}>{d.lastResult}</h2>
-              <div className="score-line">
-                <span className="team-l">{teamName(lang, last.home)}</span>
-                <span className="score">
-                  {last.home_score} : {last.away_score}
-                </span>
-                <span className="team-r">{teamName(lang, last.away)}</span>
+              <div className="scoreboard">
+                {([
+                  [last.home, last.home_score],
+                  [last.away, last.away_score],
+                ] as const).map(([team, goals]) => (
+                  <div key={team} className={`sb-row${isUs(team) ? " us" : ""}`}>
+                    <span className="sb-team">{teamName(lang, team)}</span>
+                    <span className="sb-goals">{goals}</span>
+                  </div>
+                ))}
               </div>
               <span className="muted" style={{ fontSize: 14 }}>
                 {d.league} · {roundName(lang, last.round)} · {dateLabel(lang, last.date_label)} · {isUs(last.home) ? d.home : d.away}
