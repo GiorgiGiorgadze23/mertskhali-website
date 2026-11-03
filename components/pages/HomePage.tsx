@@ -3,6 +3,8 @@ import NewsCard from "@/components/NewsCard";
 import LeagueTable from "@/components/LeagueTable";
 import FacebookFeed from "@/components/FacebookFeed";
 import { getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
+import { SITE } from "@/lib/site";
+import { CONTACT } from "@/lib/club";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
 
 export default async function HomePage({ lang }: { lang: Lang }) {
@@ -16,8 +18,29 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const around = standings.slice(start, start + 5);
   const lastOutcome = last ? outcome(last) : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SportsTeam",
+    name: "სკ მერცხალი 1925",
+    alternateName: ["ოზურგეთის მერცხალი", "მერცხალი ოზურგეთი", "FC Mertskhali 1925", "Mertskhali Ozurgeti", "FC Mertskhali"],
+    sport: "Soccer",
+    foundingDate: "1925",
+    url: lang === "en" ? `${SITE}/en` : SITE,
+    logo: `${SITE}/logo-512.png`,
+    image: `${SITE}/stadium.jpg`,
+    email: CONTACT.email,
+    sameAs: [CONTACT.facebook],
+    location: {
+      "@type": "StadiumOrArena",
+      name: "კოტე გოგატაძის სახელობის სტადიონი",
+      address: { "@type": "PostalAddress", addressLocality: "ოზურგეთი", addressRegion: "გურია", addressCountry: "GE" },
+    },
+    memberOf: { "@type": "SportsOrganization", name: "ლიგა 4", url: "https://liga.gff.ge" },
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section className="hero">
         <div className="inner">
           <div className="hero-copy">
