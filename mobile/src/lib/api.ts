@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useState } from "react";
 import type { Match, News, Player, Standing } from "./types";
 
-export const API = (Constants.expoConfig?.extra?.apiUrl as string) || "https://mertskhali1925.com";
+export const API = (Constants.expoConfig?.extra?.apiUrl as string) || "https://www.mertskhali1925.com";
 
 export type Football = { standings: Standing[]; upcoming: Match[]; results: Match[]; players: Player[]; updatedAt: string };
 export type NewsList = { items: News[]; total: number };

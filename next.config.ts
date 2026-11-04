@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   // The old *.vercel.app address forwards to the real domain so Google indexes only one copy.
   async redirects() {
     return [
-      { source: "/:path*", has: [{ type: "host", value: "mertskhali-website.vercel.app" }], destination: "https://mertskhali1925.com/:path*", permanent: true },
+      { source: "/:path*", has: [{ type: "host", value: "mertskhali-website.vercel.app" }], destination: "https://www.mertskhali1925.com/:path*", permanent: true },
     ];
   },
   experimental: {
