@@ -4,12 +4,14 @@ import LeagueTable from "@/components/LeagueTable";
 import FacebookFeed from "@/components/FacebookFeed";
 import { getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
 import { SITE } from "@/lib/site";
+import { refreshIfStale } from "@/lib/autosync";
 import { CONTACT } from "@/lib/club";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
   const [{ items: news }, standings, matches] = await Promise.all([getNews({ limit: 3, featuredFirst: true }), getStandings(), getMatches()]);
+  refreshIfStale(standings);
   const { upcoming, results } = ourMatches(matches);
   const next = upcoming[0];
   const last = results[0];

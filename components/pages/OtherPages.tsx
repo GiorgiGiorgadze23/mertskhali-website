@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HISTORY_PHOTOS } from "@/lib/history";
+import { refreshIfStale } from "@/lib/autosync";
 import LeagueTable from "@/components/LeagueTable";
 import MatchRow from "@/components/MatchRow";
 import ContactForm from "@/components/ContactForm";
@@ -64,6 +65,7 @@ export async function MatchesPage({ lang, searchParams }: { lang: Lang; searchPa
   const d = t(lang);
   const tab = (await searchParams).tab === "results" ? "results" : "upcoming";
   const [standings, matches] = await Promise.all([getStandings(), getMatches()]);
+  refreshIfStale(standings);
   const { upcoming, results } = ourMatches(matches);
   const list = tab === "results" ? results : upcoming;
   return (

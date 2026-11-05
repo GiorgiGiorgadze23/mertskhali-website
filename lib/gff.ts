@@ -93,10 +93,10 @@ export async function syncGff(db: SupabaseClient) {
   if (standings.length < 4) throw new Error("ცხრილი ვერ წავიკითხე (GFF-ის საიტი შეიცვალა?)");
 
   // Replace the table in one go; keep matches by id so results overwrite fixtures.
-  const del = await db.from("standings").delete().gte("pos", 0);
-  if (del.error) throw new Error(del.error.message);
-  const ins = await db.from("standings").insert(standings);
+  const stamp = new Date().toISOString();
+  const ins = await db.from("standings").upsert(standings.map((r) => ({ ...r, updated_at: stamp })), { onConflict: "pos" });
   if (ins.error) throw new Error(ins.error.message);
+  await db.from("standings").delete().gt("pos", standings.length);
   if (matches.length) {
     // Remove the hand-entered seed rows (ids r1…r30) once real GFF ids arrive.
     await db.from("matches").delete().like("id", "r%");

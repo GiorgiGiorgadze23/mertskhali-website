@@ -39,6 +39,7 @@ export type Standing = {
   goals_against: number;
   points: number;
   logo_url: string | null;
+  updated_at?: string;
 };
 
 export type Match = {
