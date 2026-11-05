@@ -2,7 +2,9 @@ import Link from "next/link";
 import NewsCard from "@/components/NewsCard";
 import LeagueTable from "@/components/LeagueTable";
 import FacebookFeed from "@/components/FacebookFeed";
-import { getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
+import { getLatestVideo, getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
+import ShareFb from "@/components/ShareFb";
+import { newsTitle } from "@/components/NewsCard";
 import { SITE } from "@/lib/site";
 import { refreshIfStale } from "@/lib/autosync";
 import { CONTACT } from "@/lib/club";
@@ -10,7 +12,7 @@ import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/li
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
-  const [{ items: news }, standings, matches] = await Promise.all([getNews({ limit: 3, featuredFirst: true }), getStandings(), getMatches()]);
+  const [{ items: news }, standings, matches, video] = await Promise.all([getNews({ limit: 3, featuredFirst: true }), getStandings(), getMatches(), getLatestVideo().catch(() => null)]);
   refreshIfStale(standings);
   const { upcoming, results } = ourMatches(matches);
   const next = upcoming[0];
@@ -100,6 +102,29 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         </div>
       </section>
 
+      {video && (
+        <section className="container section" style={{ paddingTop: 8, paddingBottom: 24 }}>
+          <div className="row-between" style={{ marginBottom: 20 }}>
+            <h2 className="h2">{lang === "ka" ? "ვიდეო" : "Video"}</h2>
+            <Link href={L(lang, `/news/${video.news.slug}`)} className="link-strong">{newsTitle(lang, video.news)} →</Link>
+          </div>
+          <div className="home-video">
+            <div className={`video-embed${video.embed.vertical ? " vertical" : ""}`} style={{ margin: 0 }}>
+              <iframe
+                src={video.embed.src}
+                title={newsTitle(lang, video.news)}
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} />
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="container section">
         <div className="split">
           {last && (
@@ -124,7 +149,10 @@ export default async function HomePage({ lang }: { lang: Lang }) {
                   {d.outcome[lastOutcome]}
                 </span>
               )}
-              <Link href={L(lang, "/matches?tab=results")} className="link-strong">{d.allResults}</Link>
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>
+                <ShareFb path={L(lang, `/matches/${last.id}`)} lang={lang} small />
+                <Link href={L(lang, "/matches?tab=results")} className="link-strong">{d.allResults}</Link>
+              </div>
             </div>
           )}
           <div className="card main" style={{ padding: 28 }}>

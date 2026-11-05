@@ -1,4 +1,5 @@
 import { publicClient } from "./supabase/clients";
+import { embedFor, type Embed } from "@/lib/embed";
 import { seedMatches, seedPlayers, seedStandings } from "./seed";
 import type { GalleryItem, Match, News, Player, Standing } from "./types";
 import { CLUB } from "./types";
@@ -61,6 +62,19 @@ export async function getGallery(): Promise<GalleryItem[]> {
   if (!db) return [];
   const { data } = await db.from("gallery").select("*").order("created_at", { ascending: false }).limit(60);
   return (data as GalleryItem[]) ?? [];
+}
+
+/** The newest published article that contains a video link (shown as the home-page video). */
+export async function getLatestVideo(): Promise<{ news: News; embed: Embed } | null> {
+  const { items } = await getNews({ limit: 15 });
+  for (const n of items) {
+    const lines = (n.body ?? "").split("\n").filter((l) => /^\s*https?:\/\/\S+\s*$/.test(l));
+    for (const l of lines) {
+      const embed = await embedFor(l);
+      if (embed) return { news: n, embed };
+    }
+  }
+  return null;
 }
 
 // ---------- helpers ----------

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import ShareFb from "@/components/ShareFb";
 import { getMatch, isUs, outcome } from "@/lib/data";
 import { dateLabel, L, placeName, roundName, t, teamName, translit, type Lang } from "@/lib/i18n";
 import type { Lineup, MatchEvent } from "@/lib/types";
@@ -11,7 +12,9 @@ export async function matchMetadata(lang: Lang, id: string): Promise<Metadata> {
   const m = await getMatch(id);
   if (!m) return { title: t(lang).matchesTitle };
   const score = m.played ? ` ${m.home_score}:${m.away_score}` : "";
-  return { title: `${teamName(lang, m.home)} – ${teamName(lang, m.away)}${score}` };
+  const title = `${teamName(lang, m.home)} – ${teamName(lang, m.away)}${score}`;
+  const description = `${t(lang).league} · ${roundName(lang, m.round)} · ${dateLabel(lang, m.date_label)}`;
+  return { title, description, openGraph: { title, description, type: "article" } };
 }
 
 function EventIcon({ type }: { type: string }) {
@@ -179,6 +182,7 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
       )}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+        <ShareFb path={L(lang, `/matches/${m.id}`)} lang={lang} />
         {m.gff_path && (
           <a href={`https://liga.gff.ge${m.gff_path}`} target="_blank" rel="noopener" className="btn btn-light">
             {md.source}: liga.gff.ge

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ShareFb from "@/components/ShareFb";
 import { embedFor } from "@/lib/embed";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -80,7 +81,6 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
   const english = lang === "en" && !!n.title_en;
   const body = (english ? n.body_en : n.body) ?? "";
   const blocks = await Promise.all(body.replace(/^[ \t]*(https?:\/\/\S+)[ \t]*$/gm, "\n\n$1\n\n").trim().split(/\n{2,}/).map(async (text) => ({ text, embed: await embedFor(text) })));
-  const share = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent((process.env.NEXT_PUBLIC_SITE_URL ?? "") + L(lang, "/news/" + n.slug))}`;
   return (
     <article className="article" lang={lang === "en" && !english ? "ka" : undefined}>
       <div className="meta-line" style={{ fontSize: 14 }}>
@@ -111,7 +111,7 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
         )}
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12, borderTop: "1px solid #ecebe5", paddingTop: 20 }}>
-        <a href={share} target="_blank" rel="noopener" className="btn btn-light">{d.shareFb}</a>
+        <ShareFb path={L(lang, "/news/" + n.slug)} lang={lang} />
         {n.fb_url && (
           <a href={n.fb_url} target="_blank" rel="noopener" className="btn btn-light">{lang === "ka" ? "Facebook-ზე ნახვა" : "View on Facebook"}</a>
         )}
