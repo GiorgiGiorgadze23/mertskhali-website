@@ -259,6 +259,10 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 .article .cover { border-radius: 10px; overflow: hidden; }
 .article .body p { font-size: 18px; line-height: 1.75; margin-bottom: 1em; white-space: pre-line; }
 
+/* video embeds inside articles */
+.video-embed { position: relative; width: 100%; aspect-ratio: 16 / 9; margin: 8px 0 24px; border-radius: 12px; overflow: hidden; background: #000; }
+.video-embed.vertical { aspect-ratio: 9 / 16; max-width: 400px; margin-left: auto; margin-right: auto; }
+.video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 /* gallery — archive photos */
 .archive-title { font-family: var(--serif); font-weight: 700; font-size: 24px; margin-top: 8px; }
 .archive-source { display: flex; gap: 16px; align-items: center; margin-top: 18px; padding: 14px 18px 14px 14px; background: #fff; border: 1px solid var(--line); border-left: 4px solid #3f8a6b; border-radius: 10px; max-width: 620px; }

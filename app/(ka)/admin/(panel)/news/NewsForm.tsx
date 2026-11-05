@@ -62,7 +62,7 @@ export default function NewsForm({ news }: { news?: News }) {
             <textarea name="excerpt" rows={2} value={excerpt} onChange={(e) => setExcerpt(e.target.value)} placeholder="ერთი-ორი წინადადება სიახლის ბარათისთვის" />
           </label>
           <label className="field">ტექსტი
-            <textarea name="body" rows={12} defaultValue={news?.body ?? ""} placeholder="აბზაცები გამოყავით ცარიელი ხაზით." style={{ fontSize: 16, lineHeight: 1.7 }} />
+            <textarea name="body" rows={12} defaultValue={news?.body ?? ""} placeholder="აბზაცები გამოყავით ცარიელი ხაზით. ვიდეოსთვის Facebook-ის ან YouTube-ის ბმული ცალკე ხაზზე ჩასვით." style={{ fontSize: 16, lineHeight: 1.7 }} />
           </label>
           <label className="check"><input type="checkbox" name="featured" defaultChecked={news?.featured} />მთავარ გვერდზე გამორჩეულად ჩვენება</label>
           {!news?.published && (

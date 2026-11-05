@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { embedFor } from "@/lib/embed";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import NewsCard, { newsExcerpt, newsTitle } from "@/components/NewsCard";
@@ -78,6 +79,7 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
   if (!n) notFound();
   const english = lang === "en" && !!n.title_en;
   const body = (english ? n.body_en : n.body) ?? "";
+  const blocks = await Promise.all(body.replace(/^[ \t]*(https?:\/\/\S+)[ \t]*$/gm, "\n\n$1\n\n").trim().split(/\n{2,}/).map(async (text) => ({ text, embed: await embedFor(text) })));
   const share = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent((process.env.NEXT_PUBLIC_SITE_URL ?? "") + L(lang, "/news/" + n.slug))}`;
   return (
     <article className="article" lang={lang === "en" && !english ? "ka" : undefined}>
@@ -92,9 +94,21 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
         </div>
       )}
       <div className="body">
-        {body.split(/\n{2,}/).map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
+        {blocks.map(({ text, embed }, i) =>
+          embed ? (
+            <div key={i} className={`video-embed${embed.vertical ? " vertical" : ""}`}>
+              <iframe
+                src={embed.src}
+                title={lang === "ka" ? "ვიდეო" : "Video"}
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <p key={i}>{text}</p>
+          ),
+        )}
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12, borderTop: "1px solid #ecebe5", paddingTop: 20 }}>
         <a href={share} target="_blank" rel="noopener" className="btn btn-light">{d.shareFb}</a>
