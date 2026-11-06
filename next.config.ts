@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     ];
   },
   // The match preview images read their fonts and crest from lib/fonts at runtime.
-  outputFileTracingIncludes: { "/**/opengraph-image*": ["./lib/fonts/**"] },
+  outputFileTracingIncludes: { "/**/opengraph-image*": ["./lib/fonts/**"], "/admin": ["./content/agent-inbox/**"], "/admin/**": ["./content/agent-inbox/**"] },
   experimental: {
     serverActions: { bodySizeLimit: "6mb" },
   },

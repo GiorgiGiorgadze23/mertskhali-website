@@ -101,8 +101,24 @@ export async function saveNews(_: State, form: FormData): Promise<State> {
 
 export async function deleteNews(form: FormData) {
   const db = await requireAdmin();
-  await db.from("news").delete().eq("id", String(form.get("id")));
+  const id = String(form.get("id"));
+  const prev = await db.from("news").select("source").eq("id", id).maybeSingle();
+  // Agent stories are hidden instead of deleted, so the agent's file doesn't bring them back.
+  if (prev.data?.source === "agent") await db.from("news").update({ source: "agent-dismissed", published: false }).eq("id", id);
+  else await db.from("news").delete().eq("id", id);
   refreshPublic();
+  revalidatePath("/admin");
+}
+
+/** One-click publish for a draft (used for agent drafts in the list). */
+export async function publishNews(form: FormData) {
+  const db = await requireAdmin();
+  const id = String(form.get("id"));
+  const { data } = await db.from("news").update({ published: true, published_at: new Date().toISOString() }).eq("id", id).select("slug, title, title_en, excerpt, excerpt_en").single();
+  if (data) {
+    refreshPublic(data.slug);
+    await notifyNews(data).catch(() => null);
+  }
   revalidatePath("/admin");
 }
 
