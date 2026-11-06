@@ -66,7 +66,7 @@ export async function getGallery(): Promise<GalleryItem[]> {
 }
 
 /** The newest published article that contains a video link (shown as the home-page video). */
-export async function getLatestVideo(): Promise<{ news: News | null; embed: Embed } | null> {
+export async function getLatestVideo(): Promise<{ news: News | null; embed: Embed; match?: Match | null } | null> {
   const { items } = await getNews({ limit: 15 });
   for (const n of items) {
     const lines = (n.body ?? "").split("\n").filter((l) => /^\s*https?:\/\/\S+\s*$/.test(l));
@@ -75,8 +75,9 @@ export async function getLatestVideo(): Promise<{ news: News | null; embed: Embe
       if (embed) return { news: n, embed };
     }
   }
-  const embed = FEATURED_VIDEO ? await embedFor(FEATURED_VIDEO) : null;
-  return embed ? { news: null, embed } : null;
+  if (!FEATURED_VIDEO) return null;
+  const [embed, match] = await Promise.all([embedFor(FEATURED_VIDEO.url), FEATURED_VIDEO.matchId ? getMatch(FEATURED_VIDEO.matchId) : null]);
+  return embed ? { news: null, embed, match } : null;
 }
 
 // ---------- helpers ----------

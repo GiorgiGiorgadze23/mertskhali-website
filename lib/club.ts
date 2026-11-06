@@ -18,4 +18,7 @@ export function zoneOf(pos: number, total: number): "up" | "down" | null {
 }
 
 /** Video shown on the home page until an article with a video link is published (then the newest such article wins). */
-export const FEATURED_VIDEO = "https://www.facebook.com/share/v/1F5yFAp5qh/";
+export const FEATURED_VIDEO: { url: string; matchId?: string } | null = {
+  url: "https://www.facebook.com/share/v/1F5yFAp5qh/",
+  matchId: "g4950", // მერცხალი 4:0 ბორჯომი, ტური 27 — shows the score and scorers under the video
+};

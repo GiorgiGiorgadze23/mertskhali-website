@@ -8,7 +8,24 @@ import { newsTitle } from "@/components/NewsCard";
 import { SITE } from "@/lib/site";
 import { refreshIfStale } from "@/lib/autosync";
 import { CONTACT, FEATURED_VIDEO } from "@/lib/club";
+import type { Match } from "@/lib/types";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
+
+/** "Name 10', 79'; Name 54'" per team, from the GFF match events. */
+function goalLines(m: Match, lang: Lang): ["home" | "away", string][] {
+  const out: ["home" | "away", string][] = [];
+  for (const side of ["home", "away"] as const) {
+    const by = new Map<string, string[]>();
+    for (const e of m.details?.events ?? []) {
+      if (e.side !== side || !/^(goal|goal_p|penalty|own_goal)$/.test(e.type)) continue;
+      const name = lang === "en" ? e.en : e.ka;
+      const min = `${e.minute}${e.extra ? `+${e.extra}` : ""}'${e.type === "own_goal" ? (lang === "en" ? " (OG)" : " (ავტ.)") : e.type !== "goal" ? (lang === "en" ? " (pen.)" : " (პენ.)") : ""}`;
+      by.set(name, [...(by.get(name) ?? []), min]);
+    }
+    if (by.size) out.push([side, [...by].map(([n, mins]) => `${n} ${mins.join(", ")}`).join("; ")]);
+  }
+  return out;
+}
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
@@ -98,16 +115,48 @@ export default async function HomePage({ lang }: { lang: Lang }) {
                   />
                 </div>
                 <div className="lead-video-body">
-                  <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
-                  {video.news && (
-                    <Link href={L(lang, `/news/${video.news.slug}`)} className="lead-video-title">{newsTitle(lang, video.news)}</Link>
-                  )}
-                  {video.news ? (
-                    <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} small />
+                  {video.match?.played ? (
+                    <>
+                      <div className="lv-head">
+                        <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
+                        <span className="muted">
+                          {d.league} · {roundName(lang, video.match.round)} · {dateLabel(lang, video.match.date_label)}
+                          {video.match.venue ? ` · ${placeName(lang, video.match.venue)}` : ""}
+                        </span>
+                      </div>
+                      <Link href={L(lang, `/matches/${video.match.id}`)} className="lv-score">
+                        <span className={isUs(video.match.home) ? "us" : ""}>{teamName(lang, video.match.home)}</span>
+                        <b>
+                          {video.match.home_score} : {video.match.away_score}
+                        </b>
+                        <span className={isUs(video.match.away) ? "us" : ""}>{teamName(lang, video.match.away)}</span>
+                      </Link>
+                      {goalLines(video.match, lang).map(([side, text]) => (
+                        <p key={side} className="lv-goals">
+                          <span aria-hidden="true">⚽</span> {text}
+                        </p>
+                      ))}
+                      <div className="lv-actions">
+                        <ShareFb path={L(lang, `/matches/${video.match.id}`)} lang={lang} small />
+                        <Link href={L(lang, `/matches/${video.match.id}`)} className="link-strong">
+                          {lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
+                        </Link>
+                      </div>
+                    </>
                   ) : (
-                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(FEATURED_VIDEO)}`} target="_blank" rel="noopener" className="btn btn-fb btn-sm">
-                      {d.shareFb}
-                    </a>
+                    <>
+                      <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
+                      {video.news && (
+                        <Link href={L(lang, `/news/${video.news.slug}`)} className="lead-video-title">{newsTitle(lang, video.news)}</Link>
+                      )}
+                      {video.news ? (
+                        <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} small />
+                      ) : (
+                        <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(FEATURED_VIDEO?.url ?? "")}`} target="_blank" rel="noopener" className="btn btn-fb btn-sm">
+                          {d.shareFb}
+                        </a>
+                      )}
+                    </>
                   )}
                 </div>
               </article>
