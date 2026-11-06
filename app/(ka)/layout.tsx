@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 import FontLinks from "@/components/FontLinks";
 import { dict } from "@/lib/i18n";
@@ -18,7 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <FontLinks />
       </head>
-      <body>{children}</body>
+      <body>{children}  <Analytics />
+      </body>
     </html>
   );
 }

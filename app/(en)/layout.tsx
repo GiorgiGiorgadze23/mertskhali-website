@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "../globals.css";
 import FontLinks from "@/components/FontLinks";
 import SiteHeader from "@/components/SiteHeader";
@@ -26,6 +27,7 @@ export default function EnglishRootLayout({ children }: { children: React.ReactN
           <main>{children}</main>
           <SiteFooter lang="en" />
         </div>
+        <Analytics />
       </body>
     </html>
   );
