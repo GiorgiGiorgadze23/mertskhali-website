@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import ShareFb from "@/components/ShareFb";
 import { MATCH_VIDEOS } from "@/lib/club";
 import { embedFor } from "@/lib/embed";
+import { goalLines } from "@/lib/goals";
+import { SITE } from "@/lib/site";
 import { getMatch, isUs, outcome } from "@/lib/data";
 import { dateLabel, L, placeName, roundName, t, teamName, translit, type Lang } from "@/lib/i18n";
 import type { Lineup, MatchEvent } from "@/lib/types";
@@ -14,9 +16,18 @@ export async function matchMetadata(lang: Lang, id: string): Promise<Metadata> {
   const m = await getMatch(id);
   if (!m) return { title: t(lang).matchesTitle };
   const score = m.played ? ` ${m.home_score}:${m.away_score}` : "";
+  const d = t(lang);
   const title = `${teamName(lang, m.home)} – ${teamName(lang, m.away)}${score}`;
-  const description = `${t(lang).league} · ${roundName(lang, m.round)} · ${dateLabel(lang, m.date_label)}`;
-  return { title, description, openGraph: { title, description, type: "article" } };
+  const goals = goalLines(m, lang).map(([, g]) => `⚽ ${g}`).join(" · ");
+  const video = MATCH_VIDEOS[m.id] ? (lang === "ka" ? "🎥 ვიდეო · " : "🎥 Video · ") : "";
+  const description = [video + `${d.league} · ${roundName(lang, m.round)} · ${dateLabel(lang, m.date_label)}`, goals].filter(Boolean).join(" · ");
+  const url = `${SITE}${L(lang, `/matches/${m.id}`)}`;
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: "article", siteName: d.clubFull, locale: lang === "ka" ? "ka_GE" : "en_US" },
+  };
 }
 
 function EventIcon({ type }: { type: string }) {
