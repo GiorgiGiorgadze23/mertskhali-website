@@ -7,7 +7,7 @@ import ShareFb from "@/components/ShareFb";
 import { newsTitle } from "@/components/NewsCard";
 import { SITE } from "@/lib/site";
 import { refreshIfStale } from "@/lib/autosync";
-import { CONTACT } from "@/lib/club";
+import { CONTACT, FEATURED_VIDEO } from "@/lib/club";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
 
 export default async function HomePage({ lang }: { lang: Lang }) {
@@ -106,20 +106,26 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         <section className="container section" style={{ paddingTop: 8, paddingBottom: 24 }}>
           <div className="row-between" style={{ marginBottom: 20 }}>
             <h2 className="h2">{lang === "ka" ? "ვიდეო" : "Video"}</h2>
-            <Link href={L(lang, `/news/${video.news.slug}`)} className="link-strong">{newsTitle(lang, video.news)} →</Link>
+            {video.news && <Link href={L(lang, `/news/${video.news.slug}`)} className="link-strong">{newsTitle(lang, video.news)} →</Link>}
           </div>
           <div className="home-video">
             <div className={`video-embed${video.embed.vertical ? " vertical" : ""}`} style={{ margin: 0 }}>
               <iframe
                 src={video.embed.src}
-                title={newsTitle(lang, video.news)}
+                title={video.news ? newsTitle(lang, video.news) : d.clubFull}
                 loading="lazy"
                 allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
                 allowFullScreen
               />
             </div>
             <div style={{ marginTop: 16 }}>
-              <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} />
+              {video.news ? (
+                <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} />
+              ) : (
+                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(FEATURED_VIDEO)}`} target="_blank" rel="noopener" className="btn btn-fb">
+                  {d.shareFb}
+                </a>
+              )}
             </div>
           </div>
         </section>

@@ -16,3 +16,6 @@ export function zoneOf(pos: number, total: number): "up" | "down" | null {
   if (total && pos > total - ZONES.relegated) return "down";
   return null;
 }
+
+/** Video shown on the home page until an article with a video link is published (then the newest such article wins). */
+export const FEATURED_VIDEO = "https://www.facebook.com/share/v/1F5yFAp5qh/";
