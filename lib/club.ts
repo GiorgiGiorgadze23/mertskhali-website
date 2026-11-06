@@ -18,7 +18,10 @@ export function zoneOf(pos: number, total: number): "up" | "down" | null {
 }
 
 /** Video shown on the home page until an article with a video link is published (then the newest such article wins). */
-export const FEATURED_VIDEO: { url: string; matchId?: string } | null = {
-  url: "https://www.facebook.com/share/v/1F5yFAp5qh/",
-  matchId: "g4950", // მერცხალი 4:0 ბორჯომი, ტური 27 — shows the score and scorers under the video
+/** Match videos, by GFF match id. Each one plays on that match's page; the newest is also the home-page lead. */
+export const MATCH_VIDEOS: Record<string, string> = {
+  g4950: "https://www.facebook.com/share/v/1F5yFAp5qh/", // მერცხალი 4:0 ბორჯომი, ტური 27
 };
+
+const [featuredMatch, featuredUrl] = Object.entries(MATCH_VIDEOS).at(-1) ?? [];
+export const FEATURED_VIDEO: { url: string; matchId?: string } | null = featuredUrl ? { url: featuredUrl, matchId: featuredMatch } : null;

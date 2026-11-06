@@ -265,7 +265,7 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 .lead-video { padding: 0; overflow: hidden; margin-bottom: 24px; }
 .lead-video-body { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 16px 20px; }
 .lead-video-body .cat { color: var(--blue); font-weight: 700; font-size: 14px; }
-.lead-video-body:has(.lv-score) { display: grid; gap: 10px; padding: 18px 22px 20px; }
+.lead-video-body.lv-top { display: grid; gap: 10px; padding: 18px 22px 18px; }
 .lv-head { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; }
 .lv-score { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; text-decoration: none; color: var(--ink); font-weight: 700; font-size: 22px; }
 .lv-score .us { font-weight: 800; }

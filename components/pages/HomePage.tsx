@@ -105,6 +105,29 @@ export default async function HomePage({ lang }: { lang: Lang }) {
           <div className="news-col">
             {video && (
               <article className="lead-video card">
+                {video.match?.played && (
+                  <div className="lead-video-body lv-top">
+                    <div className="lv-head">
+                      <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
+                      <span className="muted">
+                        {d.league} · {roundName(lang, video.match.round)} · {dateLabel(lang, video.match.date_label)}
+                        {video.match.venue ? ` · ${placeName(lang, video.match.venue)}` : ""}
+                      </span>
+                    </div>
+                    <Link href={L(lang, `/matches/${video.match.id}`)} className="lv-score">
+                      <span className={isUs(video.match.home) ? "us" : ""}>{teamName(lang, video.match.home)}</span>
+                      <b>
+                        {video.match.home_score} : {video.match.away_score}
+                      </b>
+                      <span className={isUs(video.match.away) ? "us" : ""}>{teamName(lang, video.match.away)}</span>
+                    </Link>
+                    {goalLines(video.match, lang).map(([side, text]) => (
+                      <p key={side} className="lv-goals">
+                        <span aria-hidden="true">⚽</span> {text}
+                      </p>
+                    ))}
+                  </div>
+                )}
                 <div className="video-embed" style={{ margin: 0, borderRadius: 0 }}>
                   <iframe
                     src={video.embed.src}
@@ -117,31 +140,10 @@ export default async function HomePage({ lang }: { lang: Lang }) {
                 <div className="lead-video-body">
                   {video.match?.played ? (
                     <>
-                      <div className="lv-head">
-                        <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
-                        <span className="muted">
-                          {d.league} · {roundName(lang, video.match.round)} · {dateLabel(lang, video.match.date_label)}
-                          {video.match.venue ? ` · ${placeName(lang, video.match.venue)}` : ""}
-                        </span>
-                      </div>
-                      <Link href={L(lang, `/matches/${video.match.id}`)} className="lv-score">
-                        <span className={isUs(video.match.home) ? "us" : ""}>{teamName(lang, video.match.home)}</span>
-                        <b>
-                          {video.match.home_score} : {video.match.away_score}
-                        </b>
-                        <span className={isUs(video.match.away) ? "us" : ""}>{teamName(lang, video.match.away)}</span>
+                      <ShareFb path={L(lang, `/matches/${video.match.id}`)} lang={lang} small />
+                      <Link href={L(lang, `/matches/${video.match.id}`)} className="link-strong">
+                        {lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
                       </Link>
-                      {goalLines(video.match, lang).map(([side, text]) => (
-                        <p key={side} className="lv-goals">
-                          <span aria-hidden="true">⚽</span> {text}
-                        </p>
-                      ))}
-                      <div className="lv-actions">
-                        <ShareFb path={L(lang, `/matches/${video.match.id}`)} lang={lang} small />
-                        <Link href={L(lang, `/matches/${video.match.id}`)} className="link-strong">
-                          {lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
-                        </Link>
-                      </div>
                     </>
                   ) : (
                     <>

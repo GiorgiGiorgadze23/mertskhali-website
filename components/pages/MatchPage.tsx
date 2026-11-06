@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ShareFb from "@/components/ShareFb";
+import { MATCH_VIDEOS } from "@/lib/club";
+import { embedFor } from "@/lib/embed";
 import { getMatch, isUs, outcome } from "@/lib/data";
 import { dateLabel, L, placeName, roundName, t, teamName, translit, type Lang } from "@/lib/i18n";
 import type { Lineup, MatchEvent } from "@/lib/types";
@@ -108,6 +110,7 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
   const o = outcome(m);
   const det = m.details;
   const events = [...(det?.events ?? [])].sort((a, b) => a.minute - b.minute || (a.extra ?? 0) - (b.extra ?? 0));
+  const video = MATCH_VIDEOS[m.id] ? await embedFor(MATCH_VIDEOS[m.id]) : null;
   const hasLineups = !!det && (det.home.starters.length > 0 || det.away.starters.length > 0);
 
   return (
@@ -130,6 +133,15 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
           {o && <span className={`tag ${o}`}>{d.outcome[o]}</span>}
           {m.venue && <span>{placeName(lang, m.venue)}</span>}
         </div>
+      </div>
+
+      {video && (
+        <div className="video-embed" style={{ margin: 0 }}>
+          <iframe src={video.src} title={`${teamName(lang, m.home)} – ${teamName(lang, m.away)}`} loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen />
+        </div>
+      )}
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
+        <ShareFb path={L(lang, `/matches/${m.id}`)} lang={lang} />
       </div>
 
       {!m.played && <p className="muted">{md.upcoming}</p>}
@@ -182,7 +194,6 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
       )}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
-        <ShareFb path={L(lang, `/matches/${m.id}`)} lang={lang} />
         {m.gff_path && (
           <a href={`https://liga.gff.ge${m.gff_path}`} target="_blank" rel="noopener" className="btn btn-light">
             {md.source}: liga.gff.ge
