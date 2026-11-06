@@ -44,11 +44,11 @@ export async function embedFor(line: string): Promise<Embed | null> {
   if (host === "facebook.com" || host === "fb.watch") {
     if (!/\/(videos|watch|reel|share\/v|share\/r)\b|^\/?$/.test(url.pathname) && host !== "fb.watch") return null;
     const href = await resolveFacebook(url.toString());
-    const vertical = /\/reel\/|\/share\/r\//.test(href);
+    const vertical = false; // the Facebook player letterboxes portrait clips itself; a 9:16 frame leaves landscape videos with a big black area
     return {
       provider: "facebook",
       vertical,
-      src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(href)}&show_text=false&width=${vertical ? 400 : 734}`,
+      src: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(href)}&show_text=false&width=734`,
     };
   }
   return null;

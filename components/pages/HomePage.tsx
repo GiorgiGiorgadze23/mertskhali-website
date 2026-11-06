@@ -86,6 +86,32 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         </div>
         <div className="news-with-fb">
           <div className="news-col">
+            {video && (
+              <article className="lead-video card">
+                <div className="video-embed" style={{ margin: 0, borderRadius: 0 }}>
+                  <iframe
+                    src={video.embed.src}
+                    title={video.news ? newsTitle(lang, video.news) : d.clubFull}
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+                <div className="lead-video-body">
+                  <span className="cat">{lang === "ka" ? "ვიდეო" : "Video"}</span>
+                  {video.news && (
+                    <Link href={L(lang, `/news/${video.news.slug}`)} className="lead-video-title">{newsTitle(lang, video.news)}</Link>
+                  )}
+                  {video.news ? (
+                    <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} small />
+                  ) : (
+                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(FEATURED_VIDEO)}`} target="_blank" rel="noopener" className="btn btn-fb btn-sm">
+                      {d.shareFb}
+                    </a>
+                  )}
+                </div>
+              </article>
+            )}
             {news.length ? (
               <div className="grid-cards">
                 {news.map((n) => (
@@ -101,35 +127,6 @@ export default async function HomePage({ lang }: { lang: Lang }) {
           </aside>
         </div>
       </section>
-
-      {video && (
-        <section className="container section" style={{ paddingTop: 8, paddingBottom: 24 }}>
-          <div className="row-between" style={{ marginBottom: 20 }}>
-            <h2 className="h2">{lang === "ka" ? "ვიდეო" : "Video"}</h2>
-            {video.news && <Link href={L(lang, `/news/${video.news.slug}`)} className="link-strong">{newsTitle(lang, video.news)} →</Link>}
-          </div>
-          <div className="home-video">
-            <div className={`video-embed${video.embed.vertical ? " vertical" : ""}`} style={{ margin: 0 }}>
-              <iframe
-                src={video.embed.src}
-                title={video.news ? newsTitle(lang, video.news) : d.clubFull}
-                loading="lazy"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-            <div style={{ marginTop: 16 }}>
-              {video.news ? (
-                <ShareFb path={L(lang, `/news/${video.news.slug}`)} lang={lang} />
-              ) : (
-                <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(FEATURED_VIDEO)}`} target="_blank" rel="noopener" className="btn btn-fb">
-                  {d.shareFb}
-                </a>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
 
       <section className="container section">
         <div className="split">
