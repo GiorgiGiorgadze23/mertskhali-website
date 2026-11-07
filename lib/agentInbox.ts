@@ -4,7 +4,7 @@ import { makeSlug } from "@/lib/slug";
 import { CATEGORIES } from "@/lib/types";
 import type { sessionClient } from "@/lib/supabase/clients";
 
-type Db = Awaited<ReturnType<typeof sessionClient>>;
+type Db = Pick<Awaited<ReturnType<typeof sessionClient>>, "from">;
 export type InboxItem = {
   key: string;
   title: string;
@@ -16,6 +16,8 @@ export type InboxItem = {
   body_en?: string;
   source_url?: string;
   image_url?: string;
+  /** Only for stories the owner asked to post directly; the scheduled agent always leaves this out (draft). */
+  published?: boolean;
 };
 
 const DIR = join(process.cwd(), "content", "agent-inbox");
@@ -55,7 +57,8 @@ export async function importAgentInbox(db: Db): Promise<number> {
       body: it.body?.trim() || null,
       category: (CATEGORIES as readonly string[]).includes(it.category ?? "") ? it.category : "კლუბი",
       image_url: it.image_url || null,
-      published: false,
+      published: it.published === true,
+      published_at: it.published === true ? new Date().toISOString() : null,
       featured: false,
       source: "agent",
       fb_post_id: key,

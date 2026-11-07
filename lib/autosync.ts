@@ -1,4 +1,6 @@
 import { after } from "next/server";
+import { serviceClient } from "@/lib/supabase/clients";
+import { importAgentInbox } from "@/lib/agentInbox";
 import { SITE } from "@/lib/site";
 import type { Standing } from "@/lib/types";
 
@@ -18,6 +20,20 @@ export function refreshIfStale(standings: Standing[]) {
     try {
       const secret = process.env.CRON_SECRET;
       await fetch(`${SITE}/api/sync-gff`, { headers: secret ? { authorization: `Bearer ${secret}` } : {}, cache: "no-store" });
+    } catch {}
+  });
+}
+
+/** Brings new files from content/agent-inbox into the database soon after a deploy (no admin visit needed). */
+let lastInbox = 0;
+export function importInboxInBackground() {
+  const now = Date.now();
+  if (now - lastInbox < 2 * 60 * 1000) return;
+  lastInbox = now;
+  after(async () => {
+    try {
+      const db = serviceClient();
+      if (db) await importAgentInbox(db);
     } catch {}
   });
 }

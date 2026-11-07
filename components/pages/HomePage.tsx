@@ -6,7 +6,7 @@ import { getLatestVideo, getMatches, getNews, getStandings, isUs, ourMatches, ou
 import ShareFb from "@/components/ShareFb";
 import { newsTitle } from "@/components/NewsCard";
 import { SITE } from "@/lib/site";
-import { refreshIfStale } from "@/lib/autosync";
+import { importInboxInBackground, refreshIfStale } from "@/lib/autosync";
 import { CONTACT, FEATURED_VIDEO } from "@/lib/club";
 import { goalLines } from "@/lib/goals";
 import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/lib/i18n";
@@ -15,6 +15,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
   const [{ items: news }, standings, matches, video] = await Promise.all([getNews({ limit: 3, featuredFirst: true }), getStandings(), getMatches(), getLatestVideo().catch(() => null)]);
   refreshIfStale(standings);
+  importInboxInBackground();
   const { upcoming, results } = ourMatches(matches);
   const next = upcoming[0];
   const last = results[0];
