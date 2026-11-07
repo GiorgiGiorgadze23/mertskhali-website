@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/sync-gff",
-      "schedule": "0 4 * * *"
+      "schedule": "0 14 * * *"
     },
     {
       "path": "/api/sync-facebook",
