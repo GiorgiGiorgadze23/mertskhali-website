@@ -257,6 +257,11 @@ table.league td.team img { width: 20px; height: 20px; object-fit: contain; }
 /* article */
 .article { max-width: 760px; margin: 0 auto; padding: 56px 24px 80px; display: flex; flex-direction: column; gap: 22px; }
 .article .cover { border-radius: 10px; overflow: hidden; }
+.brand-cover, .news-card .img.brand-cover { background: radial-gradient(120% 90% at 50% 0%, var(--ink-line) 0%, var(--ink-2) 45%, var(--ink) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--on-dark); }
+.brand-cover .badge { width: 84px; height: 84px; border-radius: 18px; background: var(--white); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.brand-cover .badge img { width: 70px; height: 70px; object-fit: contain; }
+.brand-cover .name { font-size: 13px; font-weight: 700; letter-spacing: .08em; color: var(--sky); }
+.article .cover.brand-cover { height: 200px; }
 .article .body p { font-size: 18px; line-height: 1.75; margin-bottom: 1em; white-space: pre-line; }
 
 /* facebook share button */

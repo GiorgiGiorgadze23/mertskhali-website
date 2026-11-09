@@ -3,7 +3,7 @@ import ShareFb from "@/components/ShareFb";
 import { embedFor } from "@/lib/embed";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import NewsCard, { newsExcerpt, newsTitle } from "@/components/NewsCard";
+import NewsCard, { BrandCover, newsExcerpt, newsTitle } from "@/components/NewsCard";
 import FacebookFeed from "@/components/FacebookFeed";
 import { getNews, getNewsBySlug } from "@/lib/data";
 import { CATEGORIES } from "@/lib/types";
@@ -88,10 +88,12 @@ export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) 
         <span>{formatDate(lang, n.published_at)}</span>
       </div>
       <h1 className="display" style={{ fontSize: "clamp(30px, 5vw, 40px)" }}>{newsTitle(lang, n)}</h1>
-      {n.image_url && (
+      {n.image_url ? (
         <div className="cover">
           <img src={n.image_url} alt="" />
         </div>
+      ) : (
+        <BrandCover label={t(lang).clubShort} className="cover" />
       )}
       <div className="body">
         {blocks.map(({ text, embed }, i) =>
