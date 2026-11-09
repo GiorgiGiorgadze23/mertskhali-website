@@ -1,3 +1,5 @@
+import matchVideosFile from "@/content/match-videos.json";
+
 // Club details shown across the site. Edit here and redeploy.
 export const CONTACT = {
   address: "კოტე გოგატაძის სტადიონი, ოზურგეთი",
@@ -22,6 +24,14 @@ export function zoneOf(pos: number, total: number): "up" | "down" | null {
 export const MATCH_VIDEOS: Record<string, string> = {
   g4950: "https://www.facebook.com/share/v/1F5yFAp5qh/", // მერცხალი 4:0 ბორჯომი, ტური 27
 };
+
+const ROUND_VIDEOS: Record<string, string[]> = matchVideosFile.rounds;
+
+/** All videos for a match: the id-specific one first, then the club's YouTube full-match parts for that round. */
+export function matchVideoUrls(m: { id: string; round: string }): string[] {
+  const n = m.round.replace(/\D/g, "");
+  return [...(MATCH_VIDEOS[m.id] ? [MATCH_VIDEOS[m.id]] : []), ...(ROUND_VIDEOS[n] ?? [])];
+}
 
 const [featuredMatch, featuredUrl] = Object.entries(MATCH_VIDEOS).at(-1) ?? [];
 export const FEATURED_VIDEO: { url: string; matchId?: string } | null = featuredUrl ? { url: featuredUrl, matchId: featuredMatch } : null;

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import ShareFb from "@/components/ShareFb";
-import { MATCH_VIDEOS } from "@/lib/club";
+import { matchVideoUrls } from "@/lib/club";
 import { embedFor } from "@/lib/embed";
 import { goalLines } from "@/lib/goals";
 import { SITE } from "@/lib/site";
@@ -19,7 +19,7 @@ export async function matchMetadata(lang: Lang, id: string): Promise<Metadata> {
   const d = t(lang);
   const title = `${teamName(lang, m.home)} – ${teamName(lang, m.away)}${score}`;
   const goals = goalLines(m, lang).map(([, g]) => `⚽ ${g}`).join(" · ");
-  const video = MATCH_VIDEOS[m.id] ? (lang === "ka" ? "🎥 ვიდეო · " : "🎥 Video · ") : "";
+  const video = m && matchVideoUrls(m).length ? (lang === "ka" ? "🎥 ვიდეო · " : "🎥 Video · ") : "";
   const description = [video + `${d.league} · ${roundName(lang, m.round)} · ${dateLabel(lang, m.date_label)}`, goals].filter(Boolean).join(" · ");
   const url = `${SITE}${L(lang, `/matches/${m.id}`)}`;
   return {
@@ -121,7 +121,7 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
   const o = outcome(m);
   const det = m.details;
   const events = [...(det?.events ?? [])].sort((a, b) => a.minute - b.minute || (a.extra ?? 0) - (b.extra ?? 0));
-  const video = MATCH_VIDEOS[m.id] ? await embedFor(MATCH_VIDEOS[m.id]) : null;
+  const videos = (await Promise.all(matchVideoUrls(m).map(embedFor))).filter((v) => v !== null);
   const hasLineups = !!det && (det.home.starters.length > 0 || det.away.starters.length > 0);
 
   return (
@@ -146,11 +146,18 @@ export async function MatchDetailPage({ lang, id }: { lang: Lang; id: string }) 
         </div>
       </div>
 
-      {video && (
-        <div className="video-embed" style={{ margin: 0 }}>
-          <iframe src={video.src} title={`${teamName(lang, m.home)} – ${teamName(lang, m.away)}`} loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen />
+      {videos.map((video, i) => (
+        <div key={video.src} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {videos.length > 1 && (
+            <div className="muted" style={{ fontSize: 14, fontWeight: 700 }}>
+              {md.videoPart} {i + 1}/{videos.length}
+            </div>
+          )}
+          <div className="video-embed" style={{ margin: 0 }}>
+            <iframe src={video.src} title={`${teamName(lang, m.home)} – ${teamName(lang, m.away)}`} loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen />
+          </div>
         </div>
-      )}
+      ))}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12 }}>
         <ShareFb path={L(lang, `/matches/${m.id}`)} lang={lang} />
       </div>

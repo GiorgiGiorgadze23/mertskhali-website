@@ -1,0 +1,20 @@
+{
+  "_readme": "Full-match videos from the club's YouTube channel (ს.კ მერცხალი 1925), by Liga 4 2026 round number. Several links = several parts, in order. Shown on the match page; the news agent appends new rounds here.",
+  "rounds": {
+    "11": ["https://www.youtube.com/watch?v=ZkobfwwHZy8", "https://www.youtube.com/watch?v=juKw5wlJzCE"],
+    "12": ["https://www.youtube.com/watch?v=Yl2UlY_eibo"],
+    "13": ["https://www.youtube.com/watch?v=n0Z6CKPLHMA", "https://www.youtube.com/watch?v=eVJ0R4jpXIY"],
+    "14": ["https://www.youtube.com/watch?v=HqvR6tMF57U"],
+    "15": ["https://www.youtube.com/watch?v=9QpZUCX17YA"],
+    "16": ["https://www.youtube.com/watch?v=h7AEA9AP-OI"],
+    "17": ["https://www.youtube.com/watch?v=l1RiKzTCugM"],
+    "18": ["https://www.youtube.com/watch?v=e461AA0SDqs"],
+    "20": ["https://www.youtube.com/watch?v=KsHp9U3GbME"],
+    "21": ["https://www.youtube.com/watch?v=LmZcPadpNHw", "https://www.youtube.com/watch?v=c2Ie1ryDftU", "https://www.youtube.com/watch?v=aSBjpCf5Tvs"],
+    "22": ["https://www.youtube.com/watch?v=-_tXqoLrlf8"],
+    "23": ["https://www.youtube.com/watch?v=BDZG-zBnd7s"],
+    "24": ["https://www.youtube.com/watch?v=g68m0PKKDjE"],
+    "25": ["https://www.youtube.com/watch?v=XmhDc8E7MEY", "https://www.youtube.com/watch?v=qEXeBvuUWX4"],
+    "27": ["https://www.youtube.com/watch?v=kW6GkLXd8S4"]
+  }
+}

@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { dateLabel, roundName, t, teamName, type Lang } from "@/lib/i18n";
 import { goalLines } from "@/lib/goals";
-import { MATCH_VIDEOS } from "@/lib/club";
+import { matchVideoUrls } from "@/lib/club";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
@@ -20,7 +20,7 @@ export async function matchOgImage(lang: Lang, id: string) {
   const center = m ? (m.played ? `${m.home_score} : ${m.away_score}` : m.kickoff ?? "–") : "";
   const meta = m ? `${d.league} · ${roundName(lang, m.round)} · ${dateLabel(lang, m.date_label)}` : d.league;
   const goals = m ? goalLines(m, lang).map(([, g]) => g).join("  ·  ") : "";
-  const hasVideo = !!(m && MATCH_VIDEOS[m.id]);
+  const hasVideo = !!(m && matchVideoUrls(m).length);
   const [geo, latin, logo, bg] = await Promise.all([
     asset("noto-sans-georgian-georgian-800-normal.woff"),
     asset("noto-sans-georgian-latin-800-normal.woff"),
