@@ -4,7 +4,7 @@ import LeagueTable from "@/components/LeagueTable";
 import FacebookFeed from "@/components/FacebookFeed";
 import { getLatestVideo, getMatches, getNews, getStandings, isUs, ourMatches, outcome } from "@/lib/data";
 import ShareFb from "@/components/ShareFb";
-import { newsTitle } from "@/components/NewsCard";
+import { newsExcerpt, newsTitle } from "@/components/NewsCard";
 import { SITE } from "@/lib/site";
 import { importInboxInBackground, refreshIfStale } from "@/lib/autosync";
 import { CONTACT, FEATURED_VIDEO } from "@/lib/club";
@@ -13,7 +13,13 @@ import { dateLabel, L, placeName, roundName, t, teamName, type Lang } from "@/li
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
-  const [{ items: news }, standings, matches, video] = await Promise.all([getNews({ limit: 3, featuredFirst: true }), getStandings(), getMatches(), getLatestVideo().catch(() => null)]);
+  const [{ items: topNews }, standings, matches, video, { items: recent }] = await Promise.all([
+    getNews({ limit: 4, featuredFirst: true }),
+    getStandings(),
+    getMatches(),
+    getLatestVideo().catch(() => null),
+    getNews({ limit: 15 }),
+  ]);
   refreshIfStale(standings);
   importInboxInBackground();
   const { upcoming, results } = ourMatches(matches);
@@ -23,6 +29,11 @@ export default async function HomePage({ lang }: { lang: Lang }) {
   const start = Math.max(0, Math.min(ourIdx - 2, standings.length - 5));
   const around = standings.slice(start, start + 5);
   const lastOutcome = last ? outcome(last) : null;
+  // A newer result than the lead video's match takes the lead spot (with its article, once published).
+  const videoIsCurrent = !!video && !!last && (video.match?.id === last.id || !!video.news?.body?.includes(`/matches/${last.id}`));
+  const leadMatch = last && !videoIsCurrent ? last : null;
+  const leadNews = leadMatch ? recent.find((n) => n.body?.includes(`/matches/${leadMatch.id}`)) ?? null : null;
+  const news = topNews.filter((n) => n.id !== leadNews?.id).slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -88,7 +99,48 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         </div>
         <div className="news-with-fb">
           <div className="news-col">
-            {video && (
+            {leadMatch ? (
+              <article className="lead-video card">
+                <div className="lead-video-body lv-top">
+                  <div className="lv-head">
+                    <span className="cat">{lang === "ka" ? "მთავარი" : "Top story"}</span>
+                    <span className="muted">
+                      {d.league} · {roundName(lang, leadMatch.round)} · {dateLabel(lang, leadMatch.date_label)}
+                      {leadMatch.venue ? ` · ${placeName(lang, leadMatch.venue)}` : ""}
+                    </span>
+                  </div>
+                  <Link href={L(lang, `/matches/${leadMatch.id}`)} className="lv-score">
+                    <span className={isUs(leadMatch.home) ? "us" : ""}>{teamName(lang, leadMatch.home)}</span>
+                    <b>
+                      {leadMatch.home_score} : {leadMatch.away_score}
+                    </b>
+                    <span className={isUs(leadMatch.away) ? "us" : ""}>{teamName(lang, leadMatch.away)}</span>
+                  </Link>
+                  {goalLines(leadMatch, lang).map(([side, text]) => (
+                    <p key={side} className="lv-goals">
+                      <span aria-hidden="true">⚽</span> {text}
+                    </p>
+                  ))}
+                  {leadNews && (
+                    <>
+                      <Link href={L(lang, `/news/${leadNews.slug}`)} className="lead-video-title">{newsTitle(lang, leadNews)}</Link>
+                      {newsExcerpt(lang, leadNews) && <p className="lv-goals">{newsExcerpt(lang, leadNews)}</p>}
+                    </>
+                  )}
+                  <div className="lv-actions">
+                    <ShareFb path={L(lang, leadNews ? `/news/${leadNews.slug}` : `/matches/${leadMatch.id}`)} lang={lang} small />
+                    {leadNews && (
+                      <Link href={L(lang, `/news/${leadNews.slug}`)} className="link-strong">
+                        {lang === "ka" ? "სრულად წაკითხვა →" : "Read more →"}
+                      </Link>
+                    )}
+                    <Link href={L(lang, `/matches/${leadMatch.id}`)} className="link-strong">
+                      {lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            ) : video && (
               <article className="lead-video card">
                 {video.match?.played && (
                   <div className="lead-video-body lv-top">
