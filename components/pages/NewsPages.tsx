@@ -8,6 +8,7 @@ import FacebookFeed from "@/components/FacebookFeed";
 import { getNews, getNewsBySlug } from "@/lib/data";
 import { CATEGORIES } from "@/lib/types";
 import { categoryName, formatDate, L, t, type Lang } from "@/lib/i18n";
+import { SITE } from "@/lib/site";
 
 const PER_PAGE = 9;
 
@@ -71,7 +72,17 @@ export async function articleMetadata(lang: Lang, slug: string): Promise<Metadat
   if (!n) return { title: t(lang).newsFallback };
   const title = newsTitle(lang, n);
   const description = newsExcerpt(lang, n) ?? undefined;
-  return { title, description, openGraph: { title, description, images: n.image_url ? [n.image_url] : undefined } };
+  const url = `${SITE}${L(lang, `/news/${n.slug}`)}`;
+  // Articles without a photo get a generated card (crest + match score, or crest + title) instead of no picture.
+  const image = n.image_url || `${SITE}/api/og/news/${encodeURIComponent(n.slug)}${lang === "en" ? "?lang=en" : ""}`;
+  const images = [n.image_url ? { url: image } : { url: image, width: 1200, height: 630 }];
+  return {
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: "article", siteName: t(lang).clubFull, locale: lang === "ka" ? "ka_GE" : "en_US", images },
+    twitter: { card: "summary_large_image", title, description, images: [image] },
+  };
 }
 
 export async function ArticlePage({ lang, slug }: { lang: Lang; slug: string }) {
