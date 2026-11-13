@@ -100,43 +100,43 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         <div className="news-with-fb">
           <div className="news-col">
             {leadMatch ? (
-              <article className="lead-video card">
-                <div className="lead-video-body lv-top">
-                  <div className="lv-head">
-                    <span className="cat">{lang === "ka" ? "მთავარი" : "Top story"}</span>
-                    <span className="muted">
-                      {d.league} · {roundName(lang, leadMatch.round)} · {dateLabel(lang, leadMatch.date_label)}
-                      {leadMatch.venue ? ` · ${placeName(lang, leadMatch.venue)}` : ""}
-                    </span>
-                  </div>
-                  <Link href={L(lang, `/matches/${leadMatch.id}`)} className="lv-score">
-                    <span className={isUs(leadMatch.home) ? "us" : ""}>{teamName(lang, leadMatch.home)}</span>
-                    <b>
-                      {leadMatch.home_score} : {leadMatch.away_score}
+              <article className="lead-video card lm">
+                <Link href={L(lang, `/matches/${leadMatch.id}`)} className="lm-board">
+                  <span className="lm-meta">
+                    {d.league} · {roundName(lang, leadMatch.round)} · {dateLabel(lang, leadMatch.date_label)}
+                  </span>
+                  <div className="lm-grid">
+                    {(["home", "away"] as const).map((side) => {
+                      const team = side === "home" ? leadMatch.home : leadMatch.away;
+                      const goals = goalLines(leadMatch, lang).find(([s]) => s === side)?.[1].split("; ").map((g) => g.replace(/^(\S)\S*\s+(?=\S+\s+\d)/u, "$1. ")) ?? [];
+                      return (
+                        <div key={side} className={`lm-team lm-${side}${isUs(team) ? " us" : ""}`}>
+                          <span className="lm-name">{teamName(lang, team)}</span>
+                          {goals.map((g) => (
+                            <span key={g} className="lm-goal">{g}</span>
+                          ))}
+                        </div>
+                      );
+                    })}
+                    <b className="lm-score">
+                      {leadMatch.home_score}<i>:</i>{leadMatch.away_score}
                     </b>
-                    <span className={isUs(leadMatch.away) ? "us" : ""}>{teamName(lang, leadMatch.away)}</span>
-                  </Link>
-                  {goalLines(leadMatch, lang).map(([side, text]) => (
-                    <p key={side} className="lv-goals">
-                      <span aria-hidden="true">⚽</span> {text}
-                    </p>
-                  ))}
-                  {leadNews && (
+                  </div>
+                  {leadMatch.venue && <span className="lm-venue">{placeName(lang, leadMatch.venue)}</span>}
+                </Link>
+                <div className="lm-body">
+                  <span className="cat">{lang === "ka" ? "მთავარი" : "Top story"}</span>
+                  {leadNews ? (
                     <>
                       <Link href={L(lang, `/news/${leadNews.slug}`)} className="lead-video-title">{newsTitle(lang, leadNews)}</Link>
                       {newsExcerpt(lang, leadNews) && <p className="lv-goals">{newsExcerpt(lang, leadNews)}</p>}
                     </>
-                  )}
-                  <div className="lv-actions">
-                    <ShareFb path={L(lang, leadNews ? `/news/${leadNews.slug}` : `/matches/${leadMatch.id}`)} lang={lang} small />
-                    {leadNews && (
-                      <Link href={L(lang, `/news/${leadNews.slug}`)} className="link-strong">
-                        {lang === "ka" ? "სრულად წაკითხვა →" : "Read more →"}
-                      </Link>
-                    )}
-                    <Link href={L(lang, `/matches/${leadMatch.id}`)} className="link-strong">
-                      {lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
+                  ) : null}
+                  <div className="lm-actions">
+                    <Link href={L(lang, leadNews ? `/news/${leadNews.slug}` : `/matches/${leadMatch.id}`)} className="link-strong">
+                      {leadNews ? (lang === "ka" ? "სრულად წაკითხვა →" : "Read more →") : lang === "ka" ? "მატჩის დეტალები →" : "Match details →"}
                     </Link>
+                    <ShareFb path={L(lang, leadNews ? `/news/${leadNews.slug}` : `/matches/${leadMatch.id}`)} lang={lang} label={lang === "ka" ? "გაზიარება" : "Share"} small />
                   </div>
                 </div>
               </article>
