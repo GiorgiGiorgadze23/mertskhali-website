@@ -15,6 +15,7 @@ File name: `YYYY-MM-DD-<short-key>.json`. Shape:
   "category": "მატჩი",                        // მატჩი | კლუბი | ტრანსფერი | აკადემია
   "title_en": "…", "excerpt_en": "…", "body_en": "…",   // optional
   "source_url": "https://…",                  // where the facts come from
-  "image_url": "https://…"                     // optional, only images we may use
+  "image_url": "https://…",                    // optional, only images we may use
+  "published": true, "featured": true          // only when the owner asked to post directly / lead the home page
 }
 ```

@@ -18,6 +18,8 @@ export type InboxItem = {
   image_url?: string;
   /** Only for stories the owner asked to post directly; the scheduled agent always leaves this out (draft). */
   published?: boolean;
+  /** Only when the owner asked for the story to lead the home page. */
+  featured?: boolean;
 };
 
 const DIR = join(process.cwd(), "content", "agent-inbox");
@@ -59,7 +61,7 @@ export async function importAgentInbox(db: Db): Promise<number> {
       image_url: it.image_url || null,
       published: it.published === true,
       published_at: it.published === true ? new Date().toISOString() : null,
-      featured: false,
+      featured: it.featured === true,
       source: "agent",
       fb_post_id: key,
       fb_url: it.source_url || null,
