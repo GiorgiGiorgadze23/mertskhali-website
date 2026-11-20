@@ -23,6 +23,7 @@ export function zoneOf(pos: number, total: number): "up" | "down" | null {
 /** Match videos, by GFF match id. Each one plays on that match's page; the newest is also the home-page lead. */
 export const MATCH_VIDEOS: Record<string, string> = {
   g4950: "https://www.facebook.com/share/v/1F5yFAp5qh/", // მერცხალი 4:0 ბორჯომი, ტური 27
+  g4967: "https://www.youtube.com/watch?v=yLnm7EVoMsQ", // მერცხალი 2:3 არაგველები, ტური 29 (სრული ტრანსლაცია)
 };
 
 const ROUND_VIDEOS: Record<string, string[]> = matchVideosFile.rounds;
@@ -30,7 +31,7 @@ const ROUND_VIDEOS: Record<string, string[]> = matchVideosFile.rounds;
 /** All videos for a match: the id-specific one first, then the club's YouTube full-match parts for that round. */
 export function matchVideoUrls(m: { id: string; round: string }): string[] {
   const n = m.round.replace(/\D/g, "");
-  return [...(MATCH_VIDEOS[m.id] ? [MATCH_VIDEOS[m.id]] : []), ...(ROUND_VIDEOS[n] ?? [])];
+  return [...new Set([...(MATCH_VIDEOS[m.id] ? [MATCH_VIDEOS[m.id]] : []), ...(ROUND_VIDEOS[n] ?? [])])];
 }
 
 const [featuredMatch, featuredUrl] = Object.entries(MATCH_VIDEOS).at(-1) ?? [];

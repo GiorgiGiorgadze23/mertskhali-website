@@ -69,6 +69,11 @@ export async function getGallery(): Promise<GalleryItem[]> {
 export async function getLatestVideo(): Promise<{ news: News | null; embed: Embed; match?: Match | null } | null> {
   const { items } = await getNews({ limit: 15 });
   for (const n of items) {
+    // An article about the featured video's match (newer than any article with its own video) shows that video.
+    if (FEATURED_VIDEO?.matchId && n.body?.includes(`/matches/${FEATURED_VIDEO.matchId}`)) {
+      const [embed, match] = await Promise.all([embedFor(FEATURED_VIDEO.url), getMatch(FEATURED_VIDEO.matchId)]);
+      if (embed) return { news: n, embed, match };
+    }
     const lines = (n.body ?? "").split("\n").filter((l) => /^\s*https?:\/\/\S+\s*$/.test(l));
     for (const l of lines) {
       const embed = await embedFor(l);
